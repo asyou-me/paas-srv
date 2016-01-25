@@ -1,0 +1,11 @@
+{
+  "name": "asyoume paas控制层组件",
+  "micro_ser": {
+    "conf": {
+      "addr": "",
+      "app_id": "",
+      "app_key": ""
+    }
+  },
+  "version": "0.0.1"
+}
