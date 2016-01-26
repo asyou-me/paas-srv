@@ -8,7 +8,10 @@ import (
 	"k8s.io/kubernetes/pkg/labels"
 )
 
-func MirrorList(c *client.Client, namespace string, label labels.Selector, field fields.Selector) *api.PodList {
+type MirrorHandler struct {
+}
+
+func (this *MirrorHandler) List(c *client.Client, namespace string, label labels.Selector, field fields.Selector) *api.PodList {
 	pods := c.Pods(namespace)
 	podList, _ := pods.List(api.ListOptions{
 		LabelSelector: label,
@@ -17,7 +20,7 @@ func MirrorList(c *client.Client, namespace string, label labels.Selector, field
 	return podList
 }
 
-func MirrorGet(c *client.Client, namespace string, name string) {
+func (this *MirrorHandler) Get(c *client.Client, namespace string, name string) {
 	pods := c.Pods(namespace)
 	_, err := pods.Get(name)
 	if err != nil {

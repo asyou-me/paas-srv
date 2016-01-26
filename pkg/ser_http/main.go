@@ -36,6 +36,8 @@ func main() {
 	//添加跨域cors
 	e.Use(cors.Default().Handler)
 
+	e.Post("/Pod/Put", PodPut)
+
 	// Routes
 	e.Run(":9091")
 }
