@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/asyoume/PaasControl/pkg/handler"
+	"github.com/asyoume/paas_ser/pkg/handler"
 	"github.com/labstack/echo"
 	mw "github.com/labstack/echo/middleware"
 	"github.com/rs/cors"
@@ -36,7 +36,7 @@ func main() {
 	//添加跨域cors
 	e.Use(cors.Default().Handler)
 
-	e.Post("/Pod/Put", PodPut)
+	e.Get("/Pod/Put", PodPut)
 
 	// Routes
 	e.Run(":9091")

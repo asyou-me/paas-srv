@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"k8s.io/kubernetes/pkg/api"
+	api_unversioned "k8s.io/kubernetes/pkg/api/unversioned"
 	//client "k8s.io/kubernetes/pkg/client/unversioned"
 	"k8s.io/kubernetes/pkg/fields"
 	"k8s.io/kubernetes/pkg/labels"
@@ -31,26 +32,26 @@ func (this *PodHandler) Get(name string, device_id string) {
 }
 
 func (this *PodHandler) Put() {
-	client := NewkubeClient()
-	pods := client.Pods("test")
+	c := NewkubeClient()
+	pods := c.Pods("development")
 	_, err := pods.Create(&api.Pod{
-		TypeMeta: api.TypeMeta{
+		TypeMeta: api_unversioned.TypeMeta{
 			Kind:       "Pod",
-			APIVersion: "v1beta3",
+			APIVersion: "v1",
 		},
 		ObjectMeta: api.ObjectMeta{
-			Name:   "podtest",
-			Labels: map[string]string{"name": "foo2"},
+			Name:   "postgresql",
+			Labels: map[string]string{"name": "gitlab"},
 		},
 		Spec: api.PodSpec{
 			Containers: []api.Container{
 				api.Container{
-					Name:  "containertest",
-					Image: "nginx",
+					Name:  "postgresql",
+					Image: "hub.asyou.me:5000/postgresql",
 					Ports: []api.ContainerPort{
 						api.ContainerPort{
-							HostPort:      8081,
-							ContainerPort: 80,
+							Protocol:      "TCP",
+							ContainerPort: 5432,
 						},
 					},
 				},
@@ -58,4 +59,7 @@ func (this *PodHandler) Put() {
 		},
 		Status: api.PodStatus{},
 	})
+	if err != nil {
+		fmt.Println(err)
+	}
 }

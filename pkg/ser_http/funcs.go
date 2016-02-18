@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"github.com/asyoume/PaasControl/pkg/handler"
+	"github.com/asyoume/paas_ser/pkg/handler"
 	"github.com/labstack/echo"
 	"net/http"
 )
@@ -10,9 +9,10 @@ import (
 var podhander = handler.PodHandler{}
 
 func PodPut(c *echo.Context) error {
-	r, err := podhander.Put()
+	podhander.Put()
+	var err error = nil
 	if err == nil {
-		return c.String(http.StatusOK, r)
+		return c.String(http.StatusOK, "")
 	} else {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}

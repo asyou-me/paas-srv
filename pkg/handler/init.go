@@ -12,7 +12,7 @@ var AccessLogProducer *sarama.AsyncProducer
 
 func Init(conf_path string) error {
 	kubeConfig = &client.Config{
-		Host:     "http://localhost:8080",
+		Host:     "http://115.29.113.249:8080",
 		Username: "test",
 		Password: "password",
 	}
