@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/asyoume/paas_ser/pkg/handler"
+	"github.com/asyoume/paas_srv/pkg/handler"
 	"github.com/labstack/echo"
 	mw "github.com/labstack/echo/middleware"
 	"github.com/rs/cors"

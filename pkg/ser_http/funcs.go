@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/asyoume/paas_ser/pkg/handler"
+	"github.com/asyoume/paas_srv/pkg/handler"
 	"github.com/labstack/echo"
 	"net/http"
 )
