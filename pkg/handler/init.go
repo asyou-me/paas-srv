@@ -1,32 +1,43 @@
 package handler
 
 import (
-	"fmt"
-	//"k8s.io/kubernetes/pkg/api"
-	"github.com/Shopify/sarama"
-	client "k8s.io/kubernetes/pkg/client/unversioned"
+	base_utils "github.com/asyoume/lib/utils"
+	"github.com/asyoume/paas_srv/pkg/types"
+	"github.com/asyoume/paas_srv/pkg/utils"
+	"k8s.io/kubernetes/pkg/client/restclient"
 )
 
-var kubeConfig *client.Config
-var AccessLogProducer *sarama.AsyncProducer
+var kubeConfig *restclient.Config
 
 func Init(conf_path string) error {
-	kubeConfig = &client.Config{
+	kubeConfig = &restclient.Config{
 		Host:     "http://115.29.113.249:8080",
 		Username: "test",
 		Password: "password",
 	}
-	//kafka log
-	//AccessLogProducer = newLogProducer([]string{"10.64.3.140:9092"})
-	conf, err := ConfigInit(conf_path)
+
+	conf, err := base_utils.ConfigInit(conf_path)
 	if err != nil {
+		utils.Error()
 		return err
 	}
-	fmt.Println("conf:", conf)
+	utils.InitLog(conf.MicroSer["log1"])
+
+	utils.Log.PrintKey = true
+
+	log := types.NewSystemLog()
+	log.Type = "system"
+
 	//models.Init(conf.MicroSer["db"], conf.MicroSer["dblog"])
 	if err != nil {
+
+		utils.Error(log)
 		return err
 	}
+
+	log.Msg = "start "
+	utils.Info(log)
+
 	return nil
 }
 

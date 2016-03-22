@@ -8,6 +8,15 @@
       "attr": {
         "xiaobai": "miao"
       }
+    },
+    "log1": {
+      "addr": "/home/xiaobai/dumps",
+      "id": "",
+      "secret": "",
+      "attr": {
+        "type": "file",
+        "dir": "cf_log_queue"
+      }
     }
   },
   "version": "0.0.1"

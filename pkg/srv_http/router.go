@@ -3,12 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/asyoume/lib/utils"
 	"github.com/asyoume/paas_srv/pkg/handler"
 	"github.com/labstack/echo"
 	mw "github.com/labstack/echo/middleware"
 	"github.com/rs/cors"
 	"os"
-	"path/filepath"
 )
 
 func Usage() {
@@ -22,7 +22,7 @@ func main() {
 	conf_path := flag.String("conf", "", "配置文件路径")
 	flag.Parse()
 	//获取配置文件的路径
-	complete_path(conf_path)
+	utils.CompletePath(conf_path)
 	//初始化控制层
 	err := handler.Init(*conf_path)
 	if err != nil {
@@ -36,19 +36,9 @@ func main() {
 	//添加跨域cors
 	e.Use(cors.Default().Handler)
 
+	//router
 	e.Get("/Pod/Put", PodPut)
 
-	// Routes
+	// RUN
 	e.Run(":9091")
-}
-
-func complete_path(conf_path *string) {
-	if len((*conf_path)) > 0 && string((*conf_path)[0]) != "/" {
-		var curr_path string = ""
-		curr_path, err := filepath.Abs(filepath.Dir(os.Args[0]))
-		if err != nil {
-			panic(err)
-		}
-		*conf_path = curr_path + "/" + *conf_path
-	}
 }
