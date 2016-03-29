@@ -31,7 +31,7 @@ func main() {
 	}
 
 	//初始化控制层
-	err := handler.Init(conf)
+	err = handler.Init(conf)
 	if err != nil {
 		fmt.Println("handler初始化失败:", err)
 	}

@@ -8,7 +8,7 @@ import (
 // 创建字符串uuid
 func StrUUID() string {
 	uid := uuid.NewUUID()
-	str := base64.URLEncoding.EncodeToString([]byte(uid))
+	str := base64.RawURLEncoding.EncodeToString([]byte(uid))
 	str = str[:len(str)-2]
 	return str
 }

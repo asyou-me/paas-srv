@@ -9,11 +9,10 @@ while [ -h "$SOURCE"  ]; do # resolve $SOURCE until the file is no longer a syml
 done
 DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd  )"
 
-protoc_path=/src/
-gogoproto_path="$DIR/../../../"
+protoc_path="$DIR/../../../../"
 
-protoc3 "$DIR/../conf/proto/api.proto" \
+protoc3 "$DIR/../conf/proto/app.proto" \
 --gofast_out="$DIR/../pkg/types" \
 --js_out="$DIR/../_out/js"  \
---proto_path=${gogoproto_path} \
+--proto_path=${protoc_path} \
 --proto_path="$DIR/../conf/proto"

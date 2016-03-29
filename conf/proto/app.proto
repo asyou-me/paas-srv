@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package types;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "github.com/asyoume/paas_srv/conf/proto/instance.proto";
+import "github.com/asyoume/paas_srv/conf/proto/container.proto";
+import "github.com/asyoume/paas_srv/conf/proto/service.proto";
+import "github.com/asyoume/paas_srv/conf/proto/utils.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
+option (gogoproto.goproto_getters_all) = false;
+
+// 应用
+message App {
+    string id =1;
+    string name =2;
+    // 区域
+    string region =3;
+    repeated  Instance instances = 4 ;
+    repeated  Service service = 5 ;
+    repeated Volume volumes = 6;
+    Runtime runtime = 7;
+}

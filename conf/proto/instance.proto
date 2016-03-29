@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "github.com/asyoume/paas_srv/conf/proto/container.proto";
+import "github.com/asyoume/paas_srv/conf/proto/utils.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
+option (gogoproto.goproto_getters_all) = false;
+
+// 实例
+message Instance {
+    string id = 1;
+    string name = 2;
+    int32 state = 3;
+    string release_name = 4;
+    // 镜像信息
+    repeated  Container container = 5;
+    // 运行状态
+    Runtime runtime = 6;
+    bool enable_auto_redeploy = 7;
+    int64 created_at = 8;
+    int64 last_operated_at = 9;
+    string config = 10;
+    // 区域
+    string region = 11;
+    // 应用id
+    string parent_id = 12;
+    map<string,string> labels  = 13;
+    repeated Volume volumes = 14;
+}
+
+// 事件
+message InstanceList {
+    string id =1;
+    string parent_id = 2;
+    string code =3;
+    string type =4;
+    // 区域
+    string region =5;
+    repeated Instance content = 6;
+}
