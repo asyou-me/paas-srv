@@ -16,10 +16,10 @@ func main() {
 
 	defer cli.Close()
 
-	args := &types.Instance{}
-	args.Id = "woyun2"
+	args := &types.Pod{}
+	args.Name = "woyun2"
 	args.ParentId = "default"
-	args.Container = []*types.Container{
+	args.Containers = []*types.Container{
 		&types.Container{
 			Name:  "redis",
 			Image: "hub.asyou.me/gitlab/redis",
@@ -33,20 +33,38 @@ func main() {
 	}
 	reply := new(types.Event)
 
-	err = cli.Call("Instance.Put", args, reply)
+	err = cli.Call("Pod.Post", args, reply)
 	if err != nil {
-		fmt.Println("Instance.Put: expected no error but got string %q", err.Error())
+		fmt.Println("Pod.Post: expected no error but got string %q", err.Error())
 	} else {
-		fmt.Println("Instance.Put: PASS")
+		fmt.Println("Pod.Post: PASS")
 	}
+
+	err = cli.Call("Pod.Get", args, args)
+	if err != nil {
+		fmt.Println("Pod.Get: expected no error but got string %q", err.Error())
+	} else {
+		fmt.Println("Pod.Get: PASS")
+		fmt.Println(args)
+	}
+
+	/*args.ParentId = "default"
+	err = cli.Call("Pod.Put", args, reply)
+	if err != nil {
+		fmt.Println("Pod.Put error : ", err.Error())
+	} else {
+		fmt.Println("Pod.Put: PASS")
+	}*/
 
 	list_args := &types.ListParams{}
 	list_args.ParentId = "default"
-	err = cli.Call("Instance.List", list_args, reply)
+	list_reply := &types.PodList{}
+	err = cli.Call("Pod.List", list_args, list_reply)
 	if err != nil {
-		fmt.Println("Instance.List: expected no error but got string %q", err.Error())
+		fmt.Println("Pod.List: expected no error but got string %q", err.Error())
 	} else {
-		fmt.Println("Instance.List: PASS")
+		fmt.Println("Pod.List: PASS")
+		fmt.Println(list_reply)
 	}
 
 	args2 := &types.DeleteParams{}
@@ -54,11 +72,11 @@ func main() {
 	args2.ParentId = "default"
 	reply2 := new(types.Event)
 
-	err = cli.Call("Instance.Del", args2, reply2)
+	err = cli.Call("Pod.Delete", args2, reply2)
 	if err != nil {
-		fmt.Println("Instance.Del: expected no error but got string %q", err.Error())
+		fmt.Println("Pod.Delete: error %q", err.Error())
 	} else {
-		fmt.Println("Instance.Del: PASS")
+		fmt.Println("Pod.Delete: PASS")
 	}
 
 	time.Sleep(5 * time.Second)

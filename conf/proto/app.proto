@@ -3,10 +3,6 @@ syntax = "proto3";
 package types;
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "github.com/asyoume/paas_srv/conf/proto/instance.proto";
-import "github.com/asyoume/paas_srv/conf/proto/container.proto";
-import "github.com/asyoume/paas_srv/conf/proto/service.proto";
-import "github.com/asyoume/paas_srv/conf/proto/utils.proto";
 
 option (gogoproto.sizer_all) = true;
 option (gogoproto.marshaler_all) = true;
@@ -20,8 +16,157 @@ message App {
     string name =2;
     // 区域
     string region =3;
-    repeated  Instance instances = 4 ;
+    repeated  Pod Pods = 4 ;
     repeated  Service service = 5 ;
     repeated Volume volumes = 6;
     Runtime runtime = 7;
+}
+
+/*实例相关消息定义*/
+
+// 实例
+message Pod {
+    string id = 1;
+    string name = 2;
+    int32 state = 3;
+    string release_name = 4;
+    // 镜像信息
+    repeated  Container containers = 5;
+    // 运行状态
+    Runtime runtime = 6;
+    bool enable_auto_redeploy = 7;
+    int64 created_at = 8;
+    int64 last_operated_at = 9;
+    string config = 10;
+    // 区域
+    string region = 11;
+    // 应用id
+    string parent_id = 12;
+    map<string,string> labels  = 13;
+    repeated Volume volumes = 14;
+}
+
+// pod 列表
+message PodList {
+    string id =1;
+    string parent_id = 2;
+    int32 code =3;
+    string type =4;
+    // 区域
+    string region =5;
+    repeated Pod content = 6;
+}
+
+// 镜像信息
+message Container{
+    string id = 1;
+    string name = 2;
+    string image = 3;
+    string version = 4;
+    repeated  ContainerPort port =5;
+    repeated Volume volumeMounts = 6;
+}
+
+// 镜像端口信息
+message  ContainerPort{
+    string name =1;
+    int64 containerPort=2;
+    string protocol=3;
+}
+
+// 储存空间
+message Volume{
+
+}
+
+// 空间挂载信息
+message VolumeMount{
+    string name =1;
+    bool ReadOnly=2;
+    string MountPath =3;
+}
+
+
+/*网络相关消息定义*/
+
+// 网络组件
+message Service{
+    string id = 1;
+    string name = 2;
+    string display_name = 3;
+
+    // 运行状态
+    Runtime runtime = 4;
+    // 区域
+    string region =5;
+
+    map<string,string> labels  = 6;
+    map<string,string> selector  = 7;
+    repeated ServicePort port = 8;
+}
+
+// Service 列表
+message ServiceList {
+    string id =1;
+    string parent_id = 2;
+    int32 code =3;
+    string type =4;
+    // 区域
+    string region =5;
+    repeated Service content = 6;
+}
+
+message ServicePort{
+    string name =1;
+    string protocol=2;
+    int32 port=3;
+    int32 targetPort =4;
+    int32 nodePort =5;
+}
+
+/*基础消息类型*/
+
+// 删除参数
+message DeleteParams{
+    string id =1;
+    string type =2;
+    // 区域
+    string region =3;
+    string parent_id =4;
+}
+
+// LIST参数
+message ListParams{
+    string id = 1;
+    // 区域
+    string region =2;
+    map<string,string> labels  = 3;
+    int64 offset =4;
+    int64 length =5;
+    string parent_id =6;
+}
+
+// 区域
+message Region{
+    string id = 1;
+    string name =2;
+    string url =3;
+    string user =4;
+    string key =5;
+}
+
+// 运行状态
+message Runtime{
+    string name = 1;
+    string display_name = 2;
+}
+
+// 事件
+message Event {
+    string id =1;
+    int32 code =2;
+    string type =3;
+    // 区域
+    string region =4;
+    string content = 5;
 }

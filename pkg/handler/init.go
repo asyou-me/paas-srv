@@ -2,8 +2,8 @@ package handler
 
 import (
 	"github.com/asyoume/lib/pulic_type"
+	"github.com/asyoume/paas_srv/pkg/re_act"
 	"github.com/asyoume/paas_srv/pkg/types"
-	"github.com/asyoume/paas_srv/pkg/utils"
 	"k8s.io/kubernetes/pkg/client/restclient"
 )
 
@@ -16,9 +16,9 @@ func Init(conf *pulic_type.ConfType) error {
 		Password: "password",
 	}
 
-	utils.InitLog(conf.MicroSer["log1"])
+	re_act.InitLog(conf.MicroSer["log1"])
 
-	utils.Log.PrintKey = true
+	re_act.Log.PrintKey = true
 
 	log := types.NewSystemLog()
 	log.Type = "system"
@@ -30,7 +30,7 @@ func Init(conf *pulic_type.ConfType) error {
 	}*/
 
 	log.Msg = "start "
-	utils.Info(log)
+	re_act.Info(log)
 
 	return nil
 }

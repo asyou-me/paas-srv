@@ -11,7 +11,7 @@ import (
 	"flag"
 	base_utils "github.com/asyoume/lib/utils"
 	"github.com/asyoume/paas_srv/pkg/handler"
-	"github.com/asyoume/paas_srv/pkg/utils"
+	"github.com/asyoume/paas_srv/pkg/re_act"
 	"os"
 	"os/signal"
 	"syscall"
@@ -45,7 +45,7 @@ func main() {
 
 	conf, err := base_utils.ConfigInit(*conf_path)
 	if err != nil {
-		utils.Error()
+		re_act.Error()
 	}
 
 	//初始化控制层
@@ -54,10 +54,15 @@ func main() {
 		fmt.Println("handler初始化失败:", err)
 	}
 
-	// 注册rpc服务
-	h := new(handler.PodHandler)
-	err = rpc.RegisterName("Instance", h)
-
+	// 注册 pod 服务
+	pod_h := new(handler.PodHandler)
+	err = rpc.RegisterName("Pod", pod_h)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// 注册网络服务
+	ser_h := new(handler.SerHandler)
+	err = rpc.RegisterName("Ser", ser_h)
 	if err != nil {
 		fmt.Println(err)
 	}

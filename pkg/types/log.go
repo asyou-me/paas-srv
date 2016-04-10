@@ -1,12 +1,12 @@
 package types
 
 import (
-	"github.com/asyoume/paas_srv/pkg/utils"
+//"github.com/asyoume/paas_srv/pkg/utils"
 )
 
 func NewSystemLog() *SystemLog {
 	log := SystemLog{
-		Id: utils.StrUUID(),
+	//Id: utils.StrUUID(),
 	}
 	return &log
 }
