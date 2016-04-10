@@ -68,7 +68,7 @@ func (this *PodHandler) Put(args *types.Pod, reply *types.Event) error {
 	pods := c.Pods(args.ParentId)
 
 	// 转换配置文件
-	conf := utils.PodToPodStruct(args)
+	conf := utils.PodToKubeStruct(args)
 
 	reply.Id = conf.GetName()
 

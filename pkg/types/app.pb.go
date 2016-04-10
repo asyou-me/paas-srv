@@ -144,14 +144,15 @@ func (*VolumeMount) ProtoMessage()    {}
 type Service struct {
 	Id          string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name        string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	DisplayName string `protobuf:"bytes,3,opt,name=display_name,proto3" json:"display_name,omitempty"`
+	ParentId    string `protobuf:"bytes,3,opt,name=parent_id,proto3" json:"parent_id,omitempty"`
+	DisplayName string `protobuf:"bytes,4,opt,name=display_name,proto3" json:"display_name,omitempty"`
 	// 运行状态
-	Runtime *Runtime `protobuf:"bytes,4,opt,name=runtime" json:"runtime,omitempty"`
+	Runtime *Runtime `protobuf:"bytes,5,opt,name=runtime" json:"runtime,omitempty"`
 	// 区域
-	Region   string            `protobuf:"bytes,5,opt,name=region,proto3" json:"region,omitempty"`
-	Labels   map[string]string `protobuf:"bytes,6,rep,name=labels" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	Selector map[string]string `protobuf:"bytes,7,rep,name=selector" json:"selector,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
-	Port     []*ServicePort    `protobuf:"bytes,8,rep,name=port" json:"port,omitempty"`
+	Region   string            `protobuf:"bytes,6,opt,name=region,proto3" json:"region,omitempty"`
+	Labels   map[string]string `protobuf:"bytes,7,rep,name=labels" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Selector map[string]string `protobuf:"bytes,8,rep,name=selector" json:"selector,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Port     []*ServicePort    `protobuf:"bytes,9,rep,name=port" json:"port,omitempty"`
 }
 
 func (m *Service) Reset()         { *m = Service{} }
@@ -724,14 +725,20 @@ func (m *Service) MarshalTo(data []byte) (int, error) {
 		i = encodeVarintApp(data, i, uint64(len(m.Name)))
 		i += copy(data[i:], m.Name)
 	}
-	if len(m.DisplayName) > 0 {
+	if len(m.ParentId) > 0 {
 		data[i] = 0x1a
+		i++
+		i = encodeVarintApp(data, i, uint64(len(m.ParentId)))
+		i += copy(data[i:], m.ParentId)
+	}
+	if len(m.DisplayName) > 0 {
+		data[i] = 0x22
 		i++
 		i = encodeVarintApp(data, i, uint64(len(m.DisplayName)))
 		i += copy(data[i:], m.DisplayName)
 	}
 	if m.Runtime != nil {
-		data[i] = 0x22
+		data[i] = 0x2a
 		i++
 		i = encodeVarintApp(data, i, uint64(m.Runtime.Size()))
 		n3, err := m.Runtime.MarshalTo(data[i:])
@@ -741,14 +748,14 @@ func (m *Service) MarshalTo(data []byte) (int, error) {
 		i += n3
 	}
 	if len(m.Region) > 0 {
-		data[i] = 0x2a
+		data[i] = 0x32
 		i++
 		i = encodeVarintApp(data, i, uint64(len(m.Region)))
 		i += copy(data[i:], m.Region)
 	}
 	if len(m.Labels) > 0 {
 		for k, _ := range m.Labels {
-			data[i] = 0x32
+			data[i] = 0x3a
 			i++
 			v := m.Labels[k]
 			mapSize := 1 + len(k) + sovApp(uint64(len(k))) + 1 + len(v) + sovApp(uint64(len(v)))
@@ -765,7 +772,7 @@ func (m *Service) MarshalTo(data []byte) (int, error) {
 	}
 	if len(m.Selector) > 0 {
 		for k, _ := range m.Selector {
-			data[i] = 0x3a
+			data[i] = 0x42
 			i++
 			v := m.Selector[k]
 			mapSize := 1 + len(k) + sovApp(uint64(len(k))) + 1 + len(v) + sovApp(uint64(len(v)))
@@ -782,7 +789,7 @@ func (m *Service) MarshalTo(data []byte) (int, error) {
 	}
 	if len(m.Port) > 0 {
 		for _, msg := range m.Port {
-			data[i] = 0x42
+			data[i] = 0x4a
 			i++
 			i = encodeVarintApp(data, i, uint64(msg.Size()))
 			n, err := msg.MarshalTo(data[i:])
@@ -1375,6 +1382,10 @@ func (m *Service) Size() (n int) {
 		n += 1 + l + sovApp(uint64(l))
 	}
 	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovApp(uint64(l))
+	}
+	l = len(m.ParentId)
 	if l > 0 {
 		n += 1 + l + sovApp(uint64(l))
 	}
@@ -3209,6 +3220,35 @@ func (m *Service) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ParentId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowApp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthApp
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ParentId = string(data[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DisplayName", wireType)
 			}
 			var stringLen uint64
@@ -3236,7 +3276,7 @@ func (m *Service) Unmarshal(data []byte) error {
 			}
 			m.DisplayName = string(data[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Runtime", wireType)
 			}
@@ -3269,7 +3309,7 @@ func (m *Service) Unmarshal(data []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 5:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Region", wireType)
 			}
@@ -3298,7 +3338,7 @@ func (m *Service) Unmarshal(data []byte) error {
 			}
 			m.Region = string(data[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Labels", wireType)
 			}
@@ -3409,7 +3449,7 @@ func (m *Service) Unmarshal(data []byte) error {
 			}
 			m.Labels[mapkey] = mapvalue
 			iNdEx = postIndex
-		case 7:
+		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Selector", wireType)
 			}
@@ -3520,7 +3560,7 @@ func (m *Service) Unmarshal(data []byte) error {
 			}
 			m.Selector[mapkey] = mapvalue
 			iNdEx = postIndex
-		case 8:
+		case 9:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Port", wireType)
 			}

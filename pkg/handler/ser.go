@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/asyoume/paas_srv/pkg/types"
-	//"github.com/asyoume/paas_srv/pkg/utils"
+	"github.com/asyoume/paas_srv/pkg/utils"
 	"k8s.io/kubernetes/pkg/api"
 	//api_unversioned "k8s.io/kubernetes/pkg/api/unversioned"
 	//"k8s.io/kubernetes/pkg/fields"
@@ -28,7 +28,7 @@ func (this *SerHandler) List(args *types.ListParams, reply *types.ServiceList) e
 	}
 	content := make([]*types.Service, len(serList.Items))
 	for k, v := range serList.Items {
-		//content[k] = utils.PodToPbStruct(&v)
+		content[k] = utils.ServiceToPbStruct(&v)
 	}
 	reply.Content = content
 	return err

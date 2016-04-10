@@ -4,6 +4,7 @@ import (
 	"github.com/asyoume/paas_srv/pkg/types"
 	"k8s.io/kubernetes/pkg/api"
 	api_unversioned "k8s.io/kubernetes/pkg/api/unversioned"
+	"k8s.io/kubernetes/pkg/util/intstr"
 )
 
 // kubenetes Service to protobuf struct
@@ -17,15 +18,15 @@ func ServiceToPbStruct(Service *api.Service) *types.Service {
 	// 解析容器信息
 	port := make([]*types.ServicePort, len(Service_port))
 	for k, v := range Service_port {
-		port[k] = &types.Container{
+		port[k] = &types.ServicePort{
 			Name:       v.Name,
 			Protocol:   string(v.Protocol),
 			Port:       int32(v.Port),
-			TargetPort: int32(v.TargetPort),
+			TargetPort: v.TargetPort.IntVal,
 			NodePort:   int32(v.NodePort),
 		}
 	}
-	todata.Containers = container
+	todata.Port = port
 	return todata
 }
 
@@ -46,23 +47,18 @@ func ServiceTokubenetStruct(args *types.Service) *api.Service {
 	}
 
 	// 解析转换容器信息
-	var container []api.Container = make([]api.Container, len(args.Containers))
-	for k1, v := range args.Containers {
+	var ports []api.ServicePort = make([]api.ServicePort, len(args.Port))
+	for k1, v := range args.Port {
 		// 解析转换端口信息
-		var containerPort = make([]api.ContainerPort, len(v.Port))
-		for k2, port := range v.Port {
-			containerPort[k2] = api.ContainerPort{
-				Protocol:      api.Protocol(port.Protocol),
-				ContainerPort: int(port.ContainerPort),
-			}
-		}
-		// 写入镜像信息
-		container[k1] = api.Container{
-			Name:  v.Name,
-			Image: v.Image,
-			Ports: containerPort,
+		ports[k1] = api.ServicePort{
+			Name:     v.Name,
+			Protocol: api.Protocol(v.Protocol),
+			Port:     int(v.Port),
+			TargetPort: intstr.IntOrString{
+				IntVal: v.TargetPort,
+			}, NodePort: int(v.NodePort),
 		}
 	}
-	todata.Spec.Containers = container
+	todata.Spec.Ports = ports
 	return todata
 }

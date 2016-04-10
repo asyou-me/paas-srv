@@ -86,23 +86,23 @@ message VolumeMount{
     string MountPath =3;
 }
 
-
 /*网络相关消息定义*/
 
 // 网络组件
 message Service{
     string id = 1;
     string name = 2;
-    string display_name = 3;
+    string parent_id = 3;
+    string display_name = 4;
 
     // 运行状态
-    Runtime runtime = 4;
+    Runtime runtime = 5;
     // 区域
-    string region =5;
+    string region =6;
 
-    map<string,string> labels  = 6;
-    map<string,string> selector  = 7;
-    repeated ServicePort port = 8;
+    map<string,string> labels  = 7;
+    map<string,string> selector  = 8;
+    repeated ServicePort port = 9;
 }
 
 // Service 列表
