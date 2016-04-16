@@ -34,47 +34,41 @@ func (this *SerHandler) List(args *types.ListParams, reply *types.ServiceList) e
 	return err
 }
 
-/*
-
-func (this *SerHandler) Get(args *types.Pod, reply *types.Pod) error {
+func (this *SerHandler) Get(args *types.Service, reply *types.Service) error {
 	c := NewkubeClient()
-	pods := c.Services(args.ParentId)
-	pod, err := pods.Get(args.Name)
+	sers := c.Services(args.ParentId)
+	ser, err := sers.Get(args.Name)
 	if err != nil {
 		return err
 	}
-	*reply = *utils.PodToPbStruct(pod)
+	*reply = *utils.ServiceToPbStruct(ser)
 	return nil
 }
 
-func (this *SerHandler) Post(args *types.Pod, reply *types.Event) error {
+func (this *SerHandler) Post(args *types.Service, reply *types.Event) error {
 	c := NewkubeClient()
-	pods := c.Services(args.ParentId)
-
-	if len(args.Containers) == 0 {
-		return errors.New("一个实例至少有一个容器")
-	}
+	sers := c.Services(args.ParentId)
 
 	// 转换配置文件
-	conf := utils.PodToPodStruct(args)
+	conf := utils.ServiceTokubenetStruct(args)
 
-	_, err := pods.Create(conf)
+	_, err := sers.Create(conf)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (this *SerHandler) Put(args *types.Pod, reply *types.Event) error {
+func (this *SerHandler) Put(args *types.Service, reply *types.Event) error {
 	c := NewkubeClient()
-	pods := c.Services(args.ParentId)
+	sers := c.Services(args.ParentId)
 
 	// 转换配置文件
-	conf := utils.PodToPodStruct(args)
+	conf := utils.ServiceTokubenetStruct(args)
 
 	reply.Id = conf.GetName()
 
-	_, err := pods.Update(conf)
+	_, err := sers.Update(conf)
 	if err != nil {
 		return err
 	}
@@ -83,11 +77,10 @@ func (this *SerHandler) Put(args *types.Pod, reply *types.Event) error {
 
 func (this *SerHandler) Delete(args *types.DeleteParams, reply *types.Event) error {
 	c := NewkubeClient()
-	pods := c.Services(args.ParentId)
-	err := pods.Delete(args.Id, nil)
+	sers := c.Services(args.ParentId)
+	err := sers.Delete(args.Id)
 	if err != nil {
 		return err
 	}
 	return nil
 }
-*/

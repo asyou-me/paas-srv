@@ -37,7 +37,7 @@ func (this *PodHandler) List(args *types.ListParams, reply *types.PodList) error
 func (this *PodHandler) Get(args *types.Pod, reply *types.Pod) error {
 	c := NewkubeClient()
 	pods := c.Pods(args.ParentId)
-	pod, err := pods.Get(args.Name)
+	pod, err := pods.Get(args.Id)
 	if err != nil {
 		return err
 	}
@@ -64,6 +64,22 @@ func (this *PodHandler) Post(args *types.Pod, reply *types.Event) error {
 }
 
 func (this *PodHandler) Put(args *types.Pod, reply *types.Event) error {
+	c := NewkubeClient()
+	pods := c.Pods(args.ParentId)
+
+	// 转换配置文件
+	conf := utils.PodToKubeStruct(args)
+
+	reply.Id = conf.GetName()
+
+	_, err := pods.Update(conf)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (this *PodHandler) Patch(args *types.Pod, reply *types.Event) error {
 	c := NewkubeClient()
 	pods := c.Pods(args.ParentId)
 

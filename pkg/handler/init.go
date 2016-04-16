@@ -18,8 +18,6 @@ func Init(conf *pulic_type.ConfType) error {
 
 	re_act.InitLog(conf.MicroSer["log1"])
 
-	re_act.Log.PrintKey = true
-
 	log := types.NewSystemLog()
 	log.Type = "system"
 
