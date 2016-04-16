@@ -13,6 +13,17 @@ import (
 type PodHandler struct {
 }
 
+func (this *PodHandler) Get(args *types.GetParams, reply *types.Pod) error {
+	c := NewkubeClient()
+	pods := c.Pods(args.ParentId)
+	pod, err := pods.Get(args.Id)
+	if err != nil {
+		return err
+	}
+	*reply = *utils.PodToPbStruct(pod)
+	return nil
+}
+
 func (this *PodHandler) List(args *types.ListParams, reply *types.PodList) error {
 	c := NewkubeClient()
 	pods := c.Pods(args.ParentId)
@@ -32,17 +43,6 @@ func (this *PodHandler) List(args *types.ListParams, reply *types.PodList) error
 	}
 	reply.Content = content
 	return err
-}
-
-func (this *PodHandler) Get(args *types.Pod, reply *types.Pod) error {
-	c := NewkubeClient()
-	pods := c.Pods(args.ParentId)
-	pod, err := pods.Get(args.Id)
-	if err != nil {
-		return err
-	}
-	*reply = *utils.PodToPbStruct(pod)
-	return nil
 }
 
 func (this *PodHandler) Post(args *types.Pod, reply *types.Event) error {

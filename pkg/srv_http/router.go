@@ -46,18 +46,18 @@ func main() {
 	e.Use(mw.CORS())
 
 	// 容器
-	e.Get("/pod", podGet)
-	e.Post("/pod", podPost)
-	e.Put("/pod", podPut)
-	e.Patch("/pod", podPatch)
-	e.Delete("/pod", podDelete)
+	//e.Get("/pod", podGet)
+	//e.Post("/pod", podPost)
+	//e.Put("/pod", podPut)
+	//e.Patch("/pod", podPatch)
+	//e.Delete("/pod", podDelete)
 
 	// 容器网络
-	e.Get("/ser", podGet)
-	e.Post("/ser", podPost)
-	e.Put("/ser", podPut)
-	e.Patch("/ser", podPatch)
-	e.Delete("/ser", podDelete)
+	//e.Get("/ser", podGet)
+	//e.Post("/ser", podPost)
+	//e.Put("/ser", podPut)
+	//e.Patch("/ser", podPatch)
+	//e.Delete("/ser", podDelete)
 
 	// 应用
 	e.Get("/app", podGet)

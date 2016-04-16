@@ -13,6 +13,8 @@ protoc_path="$DIR/../../../../"
 
 protoc3 "$DIR/../conf/proto/app.proto" \
 --gofast_out="$DIR/../pkg/types" \
---js_out="$DIR/../_out/js"  \
+--js_out=import_style=commonjs,binary:"$DIR/../_out/js"  \
 --proto_path=${protoc_path} \
 --proto_path="$DIR/../conf/proto"
+
+
