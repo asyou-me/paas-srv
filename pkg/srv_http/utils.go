@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo"
 )
 
+// 将结果写入到http请求
 func protoRetrun(c echo.Context, code int, data proto.Message) error {
 	req := c.Response()
 	utils.SendFrame(req, data)

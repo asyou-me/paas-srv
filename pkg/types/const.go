@@ -1,5 +1,6 @@
 package types
 
 const (
-	ApiVersion = "v1"
+	ApiVersion     = "v0.0.1"
+	ApiVersionInfo = ""
 )

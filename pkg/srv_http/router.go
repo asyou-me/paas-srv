@@ -80,6 +80,10 @@ func main() {
 	e.Patch("/user", podPatch)
 	e.Delete("/user", podDelete)
 
+	// 版本信息
+	e.Get("/version", version)
+	e.Get("/version/info", versionInfo)
+
 	// 运行http服务器
 	e.Run(fasthttp.New(":1234"))
 }

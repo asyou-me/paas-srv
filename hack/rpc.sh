@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 不是小白写的，来源于网络，用于获取当前shell文件的路径
+# 来源于网络，用于获取当前shell文件的路径
 SOURCE="$0"
 while [ -h "$SOURCE"  ]; do # resolve $SOURCE until the file is no longer a symlink
     DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd  )"
@@ -11,7 +11,7 @@ DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd  )"
 
 killall -9 PaasControl_rpc_ser
 
-#out=`godep go build -o "$DIR/../_out/PaasControl_http_ser" github.com/asyoume/paas_srv/pkg/ser_http  2>&1 >/dev/null`
+# godep
 out=`go build -o "$DIR/../_out/PaasControl_rpc_ser" github.com/asyoume/paas_srv/pkg/srv_rpc  2>&1 >/dev/null`
 
 if [ $? -eq 0 ];then
