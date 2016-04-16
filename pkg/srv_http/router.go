@@ -37,6 +37,7 @@ func main() {
 		fmt.Println("handler初始化失败:", err)
 	}
 
+	// echo引擎
 	e := echo.New()
 	// 调试测试
 	e.Use(mw.Logger())
@@ -44,17 +45,41 @@ func main() {
 	// 添加跨域 cors
 	e.Use(mw.CORS())
 
-	// 实例 restfull
+	// 容器
 	e.Get("/pod", podGet)
-	// api.xxxx.xxx/pod?region=xxx&id=xxx GET
 	e.Post("/pod", podPost)
-	// api.xxxx.xxx/pod  POST
 	e.Put("/pod", podPut)
 	e.Patch("/pod", podPatch)
 	e.Delete("/pod", podDelete)
 
-	// 实例网络 restfull
+	// 容器网络
+	e.Get("/ser", podGet)
+	e.Post("/ser", podPost)
+	e.Put("/ser", podPut)
+	e.Patch("/ser", podPatch)
+	e.Delete("/ser", podDelete)
 
-	// RUN
+	// 应用
+	e.Get("/app", podGet)
+	e.Post("/app", podPost)
+	e.Put("/app", podPut)
+	e.Patch("/app", podPatch)
+	e.Delete("/app", podDelete)
+
+	// 应用模板
+	e.Get("/app/temp", podGet)
+	//e.Post("/app/temp", podPost)
+	//e.Put("/app/temp", podPut)
+	//e.Patch("/app/temp", podPatch)
+	//e.Delete("/app/temp", podDelete)
+
+	// 用户
+	e.Get("/user", podGet)
+	e.Post("/user", podPost)
+	e.Put("/user", podPut)
+	e.Patch("/user", podPatch)
+	e.Delete("/user", podDelete)
+
+	// 运行http服务器
 	e.Run(fasthttp.New(":1234"))
 }

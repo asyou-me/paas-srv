@@ -11,7 +11,7 @@ option (gogoproto.unmarshaler_all) = true;
 option (gogoproto.goproto_getters_all) = false;
 
 // 应用
-message AppTmp {
+message App {
     string id =1;
     string name =2;
     // 区域
@@ -20,11 +20,17 @@ message AppTmp {
     repeated  Service service = 5 ;
     repeated Volume volumes = 6;
     Runtime runtime = 7;
+    string timelyState =8;
+    map<string,string> conf =9;
+    repeated string editable =10;
 }
 
-// App
-message App{
-
+message AppList{
+    int64 offset =1;
+    int64 length =2;
+    int64 total =3; 
+    string region =4;
+    repeated  App content =5;
 }
 
 /*实例相关消息定义*/
@@ -55,11 +61,10 @@ message Pod {
 message PodList {
     string id =1;
     string parent_id = 2;
-    int32 code =3;
-    string type =4;
+    string type =3;
     // 区域
-    string region =5;
-    repeated Pod content = 6;
+    string region =4;
+    repeated Pod content = 5;
 }
 
 // 镜像信息
@@ -129,6 +134,16 @@ message ServicePort{
     int32 nodePort =5;
 }
 
+/* 共用数据类型 */
+// 请求模板内容
+message GetParams{
+    string id =1;
+    string type =2;
+    // 区域
+    string region =3;
+    string parent_id =4;
+}
+
 // 删除参数
 message DeleteParams{
     string id =1;
@@ -146,7 +161,8 @@ message ListParams{
     map<string,string> labels  = 3;
     int64 offset =4;
     int64 length =5;
-    string parent_id =6;
+    string orderby = 6;
+    string parent_id =7;
 }
 
 // 区域
