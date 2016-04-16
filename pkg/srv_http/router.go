@@ -46,7 +46,9 @@ func main() {
 
 	// 实例 restfull
 	e.Get("/pod", podGet)
+	// api.xxxx.xxx/pod?region=xxx&id=xxx GET
 	e.Post("/pod", podPost)
+	// api.xxxx.xxx/pod  POST
 	e.Put("/pod", podPut)
 	e.Patch("/pod", podPatch)
 	e.Delete("/pod", podDelete)

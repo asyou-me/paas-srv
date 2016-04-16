@@ -11,7 +11,7 @@ option (gogoproto.unmarshaler_all) = true;
 option (gogoproto.goproto_getters_all) = false;
 
 // 应用
-message App {
+message AppTmp {
     string id =1;
     string name =2;
     // 区域
@@ -20,6 +20,11 @@ message App {
     repeated  Service service = 5 ;
     repeated Volume volumes = 6;
     Runtime runtime = 7;
+}
+
+// App
+message App{
+
 }
 
 /*实例相关消息定义*/
@@ -123,8 +128,6 @@ message ServicePort{
     int32 targetPort =4;
     int32 nodePort =5;
 }
-
-/*基础消息类型*/
 
 // 删除参数
 message DeleteParams{
