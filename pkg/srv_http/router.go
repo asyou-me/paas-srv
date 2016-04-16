@@ -29,6 +29,7 @@ func main() {
 	conf, err := base_utils.ConfigInit(*conf_path)
 	if err != nil {
 		re_act.Error()
+		os.Exit(2)
 	}
 
 	// 初始化控制层
