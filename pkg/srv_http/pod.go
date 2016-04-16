@@ -12,12 +12,11 @@ import (
 var pod_h *handler.PodHandler = new(handler.PodHandler)
 
 func podGet(c echo.Context) error {
+
 	var pod = new(types.Pod)
 	pod.Region = c.QueryParam("region")
 	pod.ParentId = c.QueryParam("appid")
 	pod.Id = c.QueryParam("id")
-
-	fmt.Println(pod)
 
 	err := pod_h.Get(pod, pod)
 	if err != nil {
