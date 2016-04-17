@@ -48,8 +48,10 @@ func main() {
 		re_act.Error()
 	}
 
+	fmt.Println(conf)
+
 	//初始化控制层
-	err = handler.Init(conf)
+	err = handler.Init()
 	if err != nil {
 		fmt.Println("handler初始化失败:", err)
 	}
@@ -63,6 +65,12 @@ func main() {
 	// 注册网络服务
 	ser_h := new(handler.SerHandler)
 	err = rpc.RegisterName("Ser", ser_h)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// 注册AppTemp
+	apptemp_h := new(handler.AppTempHandler)
+	err = rpc.RegisterName("AppTemp", apptemp_h)
 	if err != nil {
 		fmt.Println(err)
 	}

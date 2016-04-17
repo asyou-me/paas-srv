@@ -17,4 +17,3 @@ protoc3 "$DIR/../conf/proto/app.proto" \
 --proto_path=${protoc_path} \
 --proto_path="$DIR/../conf/proto"
 
-

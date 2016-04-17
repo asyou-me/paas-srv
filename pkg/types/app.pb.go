@@ -41,29 +41,25 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-const _ = proto.ProtoPackageIsVersion1
-
 // 应用
 type App struct {
 	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// 区域
 	Region      string            `protobuf:"bytes,3,opt,name=region,proto3" json:"region,omitempty"`
-	Pods        []*Pod            `protobuf:"bytes,4,rep,name=Pods,json=pods" json:"Pods,omitempty"`
-	Service     []*Service        `protobuf:"bytes,5,rep,name=service" json:"service,omitempty"`
+	Pods        []*Pod            `protobuf:"bytes,4,rep,name=pods" json:"pods,omitempty"`
+	Services    []*Service        `protobuf:"bytes,5,rep,name=services" json:"services,omitempty"`
 	Volumes     []*Volume         `protobuf:"bytes,6,rep,name=volumes" json:"volumes,omitempty"`
 	Runtime     *Runtime          `protobuf:"bytes,7,opt,name=runtime" json:"runtime,omitempty"`
 	TimelyState string            `protobuf:"bytes,8,opt,name=timelyState,proto3" json:"timelyState,omitempty"`
 	Conf        map[string]string `protobuf:"bytes,9,rep,name=conf" json:"conf,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	Editable    []string          `protobuf:"bytes,10,rep,name=editable" json:"editable,omitempty"`
+	Labels      map[string]string `protobuf:"bytes,11,rep,name=labels" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 }
 
-func (m *App) Reset()                    { *m = App{} }
-func (m *App) String() string            { return proto.CompactTextString(m) }
-func (*App) ProtoMessage()               {}
-func (*App) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{0} }
+func (m *App) Reset()         { *m = App{} }
+func (m *App) String() string { return proto.CompactTextString(m) }
+func (*App) ProtoMessage()    {}
 
 type AppList struct {
 	Offset  int64  `protobuf:"varint,1,opt,name=offset,proto3" json:"offset,omitempty"`
@@ -73,52 +69,49 @@ type AppList struct {
 	Content []*App `protobuf:"bytes,5,rep,name=content" json:"content,omitempty"`
 }
 
-func (m *AppList) Reset()                    { *m = AppList{} }
-func (m *AppList) String() string            { return proto.CompactTextString(m) }
-func (*AppList) ProtoMessage()               {}
-func (*AppList) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{1} }
+func (m *AppList) Reset()         { *m = AppList{} }
+func (m *AppList) String() string { return proto.CompactTextString(m) }
+func (*AppList) ProtoMessage()    {}
 
 // 实例
 type Pod struct {
 	Id          string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name        string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	State       int32  `protobuf:"varint,3,opt,name=state,proto3" json:"state,omitempty"`
-	ReleaseName string `protobuf:"bytes,4,opt,name=release_name,json=releaseName,proto3" json:"release_name,omitempty"`
+	ReleaseName string `protobuf:"bytes,4,opt,name=release_name,proto3" json:"release_name,omitempty"`
 	// 镜像信息
 	Containers []*Container `protobuf:"bytes,5,rep,name=containers" json:"containers,omitempty"`
 	// 运行状态
 	Runtime            *Runtime `protobuf:"bytes,6,opt,name=runtime" json:"runtime,omitempty"`
-	EnableAutoRedeploy bool     `protobuf:"varint,7,opt,name=enable_auto_redeploy,json=enableAutoRedeploy,proto3" json:"enable_auto_redeploy,omitempty"`
-	CreatedAt          int64    `protobuf:"varint,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	LastOperatedAt     int64    `protobuf:"varint,9,opt,name=last_operated_at,json=lastOperatedAt,proto3" json:"last_operated_at,omitempty"`
+	EnableAutoRedeploy bool     `protobuf:"varint,7,opt,name=enable_auto_redeploy,proto3" json:"enable_auto_redeploy,omitempty"`
+	CreatedAt          int64    `protobuf:"varint,8,opt,name=created_at,proto3" json:"created_at,omitempty"`
+	LastOperatedAt     int64    `protobuf:"varint,9,opt,name=last_operated_at,proto3" json:"last_operated_at,omitempty"`
 	Config             string   `protobuf:"bytes,10,opt,name=config,proto3" json:"config,omitempty"`
 	// 区域
 	Region string `protobuf:"bytes,11,opt,name=region,proto3" json:"region,omitempty"`
 	// 应用id
-	ParentId string            `protobuf:"bytes,12,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
+	ParentId string            `protobuf:"bytes,12,opt,name=parent_id,proto3" json:"parent_id,omitempty"`
 	Labels   map[string]string `protobuf:"bytes,13,rep,name=labels" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	Volumes  []*Volume         `protobuf:"bytes,14,rep,name=volumes" json:"volumes,omitempty"`
 }
 
-func (m *Pod) Reset()                    { *m = Pod{} }
-func (m *Pod) String() string            { return proto.CompactTextString(m) }
-func (*Pod) ProtoMessage()               {}
-func (*Pod) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{2} }
+func (m *Pod) Reset()         { *m = Pod{} }
+func (m *Pod) String() string { return proto.CompactTextString(m) }
+func (*Pod) ProtoMessage()    {}
 
 // pod 列表
 type PodList struct {
 	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	ParentId string `protobuf:"bytes,2,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
+	ParentId string `protobuf:"bytes,2,opt,name=parent_id,proto3" json:"parent_id,omitempty"`
 	Type     string `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
 	// 区域
 	Region  string `protobuf:"bytes,4,opt,name=region,proto3" json:"region,omitempty"`
 	Content []*Pod `protobuf:"bytes,5,rep,name=content" json:"content,omitempty"`
 }
 
-func (m *PodList) Reset()                    { *m = PodList{} }
-func (m *PodList) String() string            { return proto.CompactTextString(m) }
-func (*PodList) ProtoMessage()               {}
-func (*PodList) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{3} }
+func (m *PodList) Reset()         { *m = PodList{} }
+func (m *PodList) String() string { return proto.CompactTextString(m) }
+func (*PodList) ProtoMessage()    {}
 
 // 镜像信息
 type Container struct {
@@ -130,10 +123,9 @@ type Container struct {
 	VolumeMounts []*Volume        `protobuf:"bytes,6,rep,name=volumeMounts" json:"volumeMounts,omitempty"`
 }
 
-func (m *Container) Reset()                    { *m = Container{} }
-func (m *Container) String() string            { return proto.CompactTextString(m) }
-func (*Container) ProtoMessage()               {}
-func (*Container) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{4} }
+func (m *Container) Reset()         { *m = Container{} }
+func (m *Container) String() string { return proto.CompactTextString(m) }
+func (*Container) ProtoMessage()    {}
 
 // 镜像端口信息
 type ContainerPort struct {
@@ -142,38 +134,35 @@ type ContainerPort struct {
 	Protocol      string `protobuf:"bytes,3,opt,name=protocol,proto3" json:"protocol,omitempty"`
 }
 
-func (m *ContainerPort) Reset()                    { *m = ContainerPort{} }
-func (m *ContainerPort) String() string            { return proto.CompactTextString(m) }
-func (*ContainerPort) ProtoMessage()               {}
-func (*ContainerPort) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{5} }
+func (m *ContainerPort) Reset()         { *m = ContainerPort{} }
+func (m *ContainerPort) String() string { return proto.CompactTextString(m) }
+func (*ContainerPort) ProtoMessage()    {}
 
 // 储存空间
 type Volume struct {
 }
 
-func (m *Volume) Reset()                    { *m = Volume{} }
-func (m *Volume) String() string            { return proto.CompactTextString(m) }
-func (*Volume) ProtoMessage()               {}
-func (*Volume) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{6} }
+func (m *Volume) Reset()         { *m = Volume{} }
+func (m *Volume) String() string { return proto.CompactTextString(m) }
+func (*Volume) ProtoMessage()    {}
 
 // 空间挂载信息
 type VolumeMount struct {
 	Name      string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	ReadOnly  bool   `protobuf:"varint,2,opt,name=ReadOnly,json=readOnly,proto3" json:"ReadOnly,omitempty"`
-	MountPath string `protobuf:"bytes,3,opt,name=MountPath,json=mountPath,proto3" json:"MountPath,omitempty"`
+	ReadOnly  bool   `protobuf:"varint,2,opt,name=ReadOnly,proto3" json:"ReadOnly,omitempty"`
+	MountPath string `protobuf:"bytes,3,opt,name=MountPath,proto3" json:"MountPath,omitempty"`
 }
 
-func (m *VolumeMount) Reset()                    { *m = VolumeMount{} }
-func (m *VolumeMount) String() string            { return proto.CompactTextString(m) }
-func (*VolumeMount) ProtoMessage()               {}
-func (*VolumeMount) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{7} }
+func (m *VolumeMount) Reset()         { *m = VolumeMount{} }
+func (m *VolumeMount) String() string { return proto.CompactTextString(m) }
+func (*VolumeMount) ProtoMessage()    {}
 
 // 网络组件
 type Service struct {
 	Id          string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name        string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	ParentId    string `protobuf:"bytes,3,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
-	DisplayName string `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	ParentId    string `protobuf:"bytes,3,opt,name=parent_id,proto3" json:"parent_id,omitempty"`
+	DisplayName string `protobuf:"bytes,4,opt,name=display_name,proto3" json:"display_name,omitempty"`
 	// 运行状态
 	Runtime *Runtime `protobuf:"bytes,5,opt,name=runtime" json:"runtime,omitempty"`
 	// 区域
@@ -183,15 +172,14 @@ type Service struct {
 	Port     []*ServicePort    `protobuf:"bytes,9,rep,name=port" json:"port,omitempty"`
 }
 
-func (m *Service) Reset()                    { *m = Service{} }
-func (m *Service) String() string            { return proto.CompactTextString(m) }
-func (*Service) ProtoMessage()               {}
-func (*Service) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{8} }
+func (m *Service) Reset()         { *m = Service{} }
+func (m *Service) String() string { return proto.CompactTextString(m) }
+func (*Service) ProtoMessage()    {}
 
 // Service 列表
 type ServiceList struct {
 	Id       string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	ParentId string `protobuf:"bytes,2,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
+	ParentId string `protobuf:"bytes,2,opt,name=parent_id,proto3" json:"parent_id,omitempty"`
 	Code     int32  `protobuf:"varint,3,opt,name=code,proto3" json:"code,omitempty"`
 	Type     string `protobuf:"bytes,4,opt,name=type,proto3" json:"type,omitempty"`
 	// 区域
@@ -199,10 +187,9 @@ type ServiceList struct {
 	Content []*Service `protobuf:"bytes,6,rep,name=content" json:"content,omitempty"`
 }
 
-func (m *ServiceList) Reset()                    { *m = ServiceList{} }
-func (m *ServiceList) String() string            { return proto.CompactTextString(m) }
-func (*ServiceList) ProtoMessage()               {}
-func (*ServiceList) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{9} }
+func (m *ServiceList) Reset()         { *m = ServiceList{} }
+func (m *ServiceList) String() string { return proto.CompactTextString(m) }
+func (*ServiceList) ProtoMessage()    {}
 
 type ServicePort struct {
 	Name       string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -212,10 +199,9 @@ type ServicePort struct {
 	NodePort   int32  `protobuf:"varint,5,opt,name=nodePort,proto3" json:"nodePort,omitempty"`
 }
 
-func (m *ServicePort) Reset()                    { *m = ServicePort{} }
-func (m *ServicePort) String() string            { return proto.CompactTextString(m) }
-func (*ServicePort) ProtoMessage()               {}
-func (*ServicePort) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{10} }
+func (m *ServicePort) Reset()         { *m = ServicePort{} }
+func (m *ServicePort) String() string { return proto.CompactTextString(m) }
+func (*ServicePort) ProtoMessage()    {}
 
 // 请求模板内容
 type GetParams struct {
@@ -223,13 +209,12 @@ type GetParams struct {
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	// 区域
 	Region   string `protobuf:"bytes,3,opt,name=region,proto3" json:"region,omitempty"`
-	ParentId string `protobuf:"bytes,4,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
+	ParentId string `protobuf:"bytes,4,opt,name=parent_id,proto3" json:"parent_id,omitempty"`
 }
 
-func (m *GetParams) Reset()                    { *m = GetParams{} }
-func (m *GetParams) String() string            { return proto.CompactTextString(m) }
-func (*GetParams) ProtoMessage()               {}
-func (*GetParams) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{11} }
+func (m *GetParams) Reset()         { *m = GetParams{} }
+func (m *GetParams) String() string { return proto.CompactTextString(m) }
+func (*GetParams) ProtoMessage()    {}
 
 // 删除参数
 type DeleteParams struct {
@@ -237,13 +222,12 @@ type DeleteParams struct {
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
 	// 区域
 	Region   string `protobuf:"bytes,3,opt,name=region,proto3" json:"region,omitempty"`
-	ParentId string `protobuf:"bytes,4,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
+	ParentId string `protobuf:"bytes,4,opt,name=parent_id,proto3" json:"parent_id,omitempty"`
 }
 
-func (m *DeleteParams) Reset()                    { *m = DeleteParams{} }
-func (m *DeleteParams) String() string            { return proto.CompactTextString(m) }
-func (*DeleteParams) ProtoMessage()               {}
-func (*DeleteParams) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{12} }
+func (m *DeleteParams) Reset()         { *m = DeleteParams{} }
+func (m *DeleteParams) String() string { return proto.CompactTextString(m) }
+func (*DeleteParams) ProtoMessage()    {}
 
 // LIST参数
 type ListParams struct {
@@ -254,13 +238,12 @@ type ListParams struct {
 	Offset   int64             `protobuf:"varint,4,opt,name=offset,proto3" json:"offset,omitempty"`
 	Length   int64             `protobuf:"varint,5,opt,name=length,proto3" json:"length,omitempty"`
 	Orderby  string            `protobuf:"bytes,6,opt,name=orderby,proto3" json:"orderby,omitempty"`
-	ParentId string            `protobuf:"bytes,7,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
+	ParentId string            `protobuf:"bytes,7,opt,name=parent_id,proto3" json:"parent_id,omitempty"`
 }
 
-func (m *ListParams) Reset()                    { *m = ListParams{} }
-func (m *ListParams) String() string            { return proto.CompactTextString(m) }
-func (*ListParams) ProtoMessage()               {}
-func (*ListParams) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{13} }
+func (m *ListParams) Reset()         { *m = ListParams{} }
+func (m *ListParams) String() string { return proto.CompactTextString(m) }
+func (*ListParams) ProtoMessage()    {}
 
 // 区域
 type Region struct {
@@ -271,21 +254,19 @@ type Region struct {
 	Key  string `protobuf:"bytes,5,opt,name=key,proto3" json:"key,omitempty"`
 }
 
-func (m *Region) Reset()                    { *m = Region{} }
-func (m *Region) String() string            { return proto.CompactTextString(m) }
-func (*Region) ProtoMessage()               {}
-func (*Region) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{14} }
+func (m *Region) Reset()         { *m = Region{} }
+func (m *Region) String() string { return proto.CompactTextString(m) }
+func (*Region) ProtoMessage()    {}
 
 // 运行状态
 type Runtime struct {
 	Name        string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	DisplayName string `protobuf:"bytes,2,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	DisplayName string `protobuf:"bytes,2,opt,name=display_name,proto3" json:"display_name,omitempty"`
 }
 
-func (m *Runtime) Reset()                    { *m = Runtime{} }
-func (m *Runtime) String() string            { return proto.CompactTextString(m) }
-func (*Runtime) ProtoMessage()               {}
-func (*Runtime) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{15} }
+func (m *Runtime) Reset()         { *m = Runtime{} }
+func (m *Runtime) String() string { return proto.CompactTextString(m) }
+func (*Runtime) ProtoMessage()    {}
 
 // 事件
 type Event struct {
@@ -297,10 +278,9 @@ type Event struct {
 	Content string `protobuf:"bytes,5,opt,name=content,proto3" json:"content,omitempty"`
 }
 
-func (m *Event) Reset()                    { *m = Event{} }
-func (m *Event) String() string            { return proto.CompactTextString(m) }
-func (*Event) ProtoMessage()               {}
-func (*Event) Descriptor() ([]byte, []int) { return fileDescriptorApp, []int{16} }
+func (m *Event) Reset()         { *m = Event{} }
+func (m *Event) String() string { return proto.CompactTextString(m) }
+func (*Event) ProtoMessage()    {}
 
 func init() {
 	proto.RegisterType((*App)(nil), "types.App")
@@ -366,8 +346,8 @@ func (m *App) MarshalTo(data []byte) (int, error) {
 			i += n
 		}
 	}
-	if len(m.Service) > 0 {
-		for _, msg := range m.Service {
+	if len(m.Services) > 0 {
+		for _, msg := range m.Services {
 			data[i] = 0x2a
 			i++
 			i = encodeVarintApp(data, i, uint64(msg.Size()))
@@ -436,6 +416,23 @@ func (m *App) MarshalTo(data []byte) (int, error) {
 			data[i] = uint8(l)
 			i++
 			i += copy(data[i:], s)
+		}
+	}
+	if len(m.Labels) > 0 {
+		for k, _ := range m.Labels {
+			data[i] = 0x5a
+			i++
+			v := m.Labels[k]
+			mapSize := 1 + len(k) + sovApp(uint64(len(k))) + 1 + len(v) + sovApp(uint64(len(v)))
+			i = encodeVarintApp(data, i, uint64(mapSize))
+			data[i] = 0xa
+			i++
+			i = encodeVarintApp(data, i, uint64(len(k)))
+			i += copy(data[i:], k)
+			data[i] = 0x12
+			i++
+			i = encodeVarintApp(data, i, uint64(len(v)))
+			i += copy(data[i:], v)
 		}
 	}
 	return i, nil
@@ -1369,8 +1366,8 @@ func (m *App) Size() (n int) {
 			n += 1 + l + sovApp(uint64(l))
 		}
 	}
-	if len(m.Service) > 0 {
-		for _, e := range m.Service {
+	if len(m.Services) > 0 {
+		for _, e := range m.Services {
 			l = e.Size()
 			n += 1 + l + sovApp(uint64(l))
 		}
@@ -1401,6 +1398,14 @@ func (m *App) Size() (n int) {
 		for _, s := range m.Editable {
 			l = len(s)
 			n += 1 + l + sovApp(uint64(l))
+		}
+	}
+	if len(m.Labels) > 0 {
+		for k, v := range m.Labels {
+			_ = k
+			_ = v
+			mapEntrySize := 1 + len(k) + sovApp(uint64(len(k))) + 1 + len(v) + sovApp(uint64(len(v)))
+			n += mapEntrySize + 1 + sovApp(uint64(mapEntrySize))
 		}
 	}
 	return n
@@ -2012,7 +2017,7 @@ func (m *App) Unmarshal(data []byte) error {
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Service", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Services", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -2036,8 +2041,8 @@ func (m *App) Unmarshal(data []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Service = append(m.Service, &Service{})
-			if err := m.Service[len(m.Service)-1].Unmarshal(data[iNdEx:postIndex]); err != nil {
+			m.Services = append(m.Services, &Service{})
+			if err := m.Services[len(m.Services)-1].Unmarshal(data[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -2273,6 +2278,117 @@ func (m *App) Unmarshal(data []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Editable = append(m.Editable, string(data[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 11:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Labels", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowApp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthApp
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			var keykey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowApp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				keykey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			var stringLenmapkey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowApp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				stringLenmapkey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLenmapkey := int(stringLenmapkey)
+			if intStringLenmapkey < 0 {
+				return ErrInvalidLengthApp
+			}
+			postStringIndexmapkey := iNdEx + intStringLenmapkey
+			if postStringIndexmapkey > l {
+				return io.ErrUnexpectedEOF
+			}
+			mapkey := string(data[iNdEx:postStringIndexmapkey])
+			iNdEx = postStringIndexmapkey
+			var valuekey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowApp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				valuekey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			var stringLenmapvalue uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowApp
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := data[iNdEx]
+				iNdEx++
+				stringLenmapvalue |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLenmapvalue := int(stringLenmapvalue)
+			if intStringLenmapvalue < 0 {
+				return ErrInvalidLengthApp
+			}
+			postStringIndexmapvalue := iNdEx + intStringLenmapvalue
+			if postStringIndexmapvalue > l {
+				return io.ErrUnexpectedEOF
+			}
+			mapvalue := string(data[iNdEx:postStringIndexmapvalue])
+			iNdEx = postStringIndexmapvalue
+			if m.Labels == nil {
+				m.Labels = make(map[string]string)
+			}
+			m.Labels[mapkey] = mapvalue
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -5800,76 +5916,3 @@ var (
 	ErrInvalidLengthApp = fmt.Errorf("proto: negative length found during unmarshaling")
 	ErrIntOverflowApp   = fmt.Errorf("proto: integer overflow")
 )
-
-var fileDescriptorApp = []byte{
-	// 1097 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xb4, 0x56, 0xcd, 0x6e, 0xe4, 0x44,
-	0x10, 0xde, 0xb1, 0x3d, 0x3f, 0xae, 0x49, 0xa2, 0xa8, 0x15, 0xad, 0xac, 0x61, 0x37, 0x0a, 0xd6,
-	0x0a, 0x72, 0x61, 0x76, 0x59, 0x84, 0x58, 0xe0, 0x42, 0x58, 0x56, 0x08, 0x69, 0x61, 0x23, 0x47,
-	0xda, 0x0b, 0x87, 0x91, 0x67, 0xdc, 0x99, 0xb5, 0xf0, 0xb8, 0x8d, 0xdd, 0x13, 0x69, 0xde, 0x80,
-	0x4b, 0xee, 0x88, 0x33, 0x8f, 0x01, 0xf7, 0x3d, 0xf2, 0x08, 0xfc, 0x3c, 0x08, 0x54, 0x57, 0xb7,
-	0xff, 0x06, 0x27, 0x4a, 0x58, 0x71, 0x18, 0x4d, 0xd7, 0x4f, 0x77, 0x55, 0x57, 0x7d, 0x5f, 0xb5,
-	0xc1, 0x0d, 0xb3, 0x6c, 0x9a, 0xe5, 0x42, 0x0a, 0xd6, 0x97, 0x9b, 0x8c, 0x17, 0x93, 0xf7, 0x96,
-	0xb1, 0x7c, 0xb5, 0x9e, 0x4f, 0x17, 0x62, 0xf5, 0x70, 0x29, 0x96, 0xe2, 0x21, 0x59, 0xe7, 0xeb,
-	0x73, 0x92, 0x48, 0xa0, 0x95, 0xde, 0xe5, 0xff, 0x6d, 0x81, 0x7d, 0x92, 0x65, 0x6c, 0x0f, 0xac,
-	0x38, 0xf2, 0x7a, 0x47, 0xbd, 0x63, 0x37, 0xc0, 0x15, 0x63, 0xe0, 0xa4, 0xe1, 0x8a, 0x7b, 0x16,
-	0x69, 0x68, 0xcd, 0xee, 0xc2, 0x20, 0xe7, 0xcb, 0x58, 0xa4, 0x9e, 0x4d, 0x5a, 0x23, 0xb1, 0x43,
-	0x70, 0x4e, 0x45, 0x54, 0x78, 0xce, 0x91, 0x7d, 0x3c, 0x7e, 0x0c, 0x53, 0x4a, 0x64, 0x8a, 0xaa,
-	0xc0, 0xc9, 0x50, 0xcf, 0x8e, 0x61, 0x58, 0xf0, 0xfc, 0x22, 0x5e, 0x70, 0xaf, 0x4f, 0x2e, 0x7b,
-	0xc6, 0xe5, 0x4c, 0x6b, 0x83, 0xd2, 0xcc, 0xde, 0x85, 0xe1, 0x85, 0x48, 0xd6, 0x2b, 0x5e, 0x78,
-	0x03, 0xf2, 0xdc, 0x35, 0x9e, 0x2f, 0x49, 0x1b, 0x94, 0x56, 0x75, 0x64, 0xbe, 0x4e, 0x65, 0x8c,
-	0x19, 0x0e, 0x31, 0x97, 0xfa, 0xc8, 0x40, 0x6b, 0x83, 0xd2, 0xcc, 0x8e, 0x60, 0xac, 0xfe, 0x93,
-	0xcd, 0x99, 0x0c, 0x25, 0xf7, 0x46, 0x94, 0x79, 0x53, 0x85, 0x67, 0x39, 0x0b, 0x91, 0x9e, 0x7b,
-	0x2e, 0x45, 0x3c, 0x30, 0x07, 0x61, 0x51, 0xa6, 0x4f, 0x51, 0xfd, 0x2c, 0x95, 0xf9, 0x26, 0x20,
-	0x0f, 0x36, 0x81, 0x11, 0x8f, 0x62, 0x19, 0xce, 0x13, 0xee, 0x01, 0x7a, 0xbb, 0x41, 0x25, 0x4f,
-	0x3e, 0x02, 0xb7, 0x72, 0x67, 0xfb, 0x60, 0x7f, 0xc7, 0x37, 0xa6, 0x9c, 0x6a, 0xc9, 0x0e, 0xa0,
-	0x7f, 0x11, 0x26, 0xeb, 0xb2, 0xa0, 0x5a, 0xf8, 0xc4, 0x7a, 0xd2, 0xf3, 0x2f, 0x7b, 0x30, 0xc4,
-	0x60, 0xcf, 0xe3, 0x42, 0xaa, 0x0a, 0x8b, 0xf3, 0xf3, 0x82, 0x4b, 0xda, 0x6a, 0x07, 0x46, 0x52,
-	0xfa, 0x84, 0xa7, 0x4b, 0xf9, 0x8a, 0xb6, 0xa3, 0x5e, 0x4b, 0xea, 0x54, 0x29, 0x64, 0x98, 0x50,
-	0x43, 0xec, 0x40, 0x0b, 0x8d, 0x3e, 0x39, 0xad, 0x3e, 0x3d, 0x80, 0x21, 0x5e, 0x43, 0xf2, 0x54,
-	0x9a, 0x3e, 0x40, 0x7d, 0xd7, 0xa0, 0x34, 0xf9, 0x3f, 0x39, 0x60, 0x63, 0xef, 0x6e, 0x84, 0x08,
-	0x8c, 0x5f, 0x50, 0x59, 0x55, 0xfc, 0x7e, 0xa0, 0x05, 0xf6, 0x36, 0xec, 0xe4, 0x3c, 0xe1, 0x61,
-	0xc1, 0x67, 0xb4, 0x43, 0x67, 0x31, 0x36, 0xba, 0x6f, 0xd4, 0xc6, 0x47, 0x00, 0x2a, 0x5e, 0x18,
-	0xa7, 0x3c, 0x2f, 0x4c, 0x36, 0xfb, 0x26, 0x9b, 0xa7, 0xa5, 0x21, 0x68, 0xf8, 0x34, 0x3b, 0x3e,
-	0xb8, 0xbe, 0xe3, 0x8f, 0xe0, 0x80, 0xa7, 0xaa, 0x27, 0xb3, 0x70, 0x2d, 0xc5, 0x2c, 0xe7, 0x11,
-	0xcf, 0x12, 0xb1, 0x21, 0xa0, 0x8c, 0x02, 0xa6, 0x6d, 0x27, 0x68, 0x0a, 0x8c, 0x85, 0xdd, 0xc7,
-	0x6c, 0x72, 0x8e, 0xa9, 0x47, 0xb3, 0x50, 0x12, 0x44, 0xec, 0xc0, 0x35, 0x9a, 0x13, 0x89, 0xa1,
-	0xf7, 0x93, 0xb0, 0x90, 0x33, 0x91, 0xf1, 0xbc, 0x74, 0x72, 0xc9, 0x69, 0x4f, 0xe9, 0x5f, 0x18,
-	0xf5, 0x09, 0xf5, 0x49, 0x01, 0x25, 0x5e, 0x22, 0x3c, 0xa8, 0xf2, 0x5a, 0x6a, 0x74, 0x64, 0xdc,
-	0xea, 0xc8, 0x5b, 0xe0, 0x66, 0x61, 0x8e, 0x55, 0x9f, 0x61, 0xa9, 0x77, 0xc8, 0x34, 0xd2, 0x8a,
-	0xaf, 0x22, 0x36, 0xc5, 0xa6, 0x87, 0x73, 0x9e, 0x14, 0xde, 0x2e, 0xd5, 0xe7, 0x6e, 0x4d, 0xac,
-	0xe9, 0x73, 0x32, 0x68, 0x6c, 0x1a, 0xaf, 0x26, 0x79, 0xf6, 0xae, 0x23, 0xcf, 0xe4, 0x63, 0x18,
-	0x37, 0xf6, 0xdf, 0x0a, 0xac, 0x3f, 0x20, 0x58, 0x31, 0x3e, 0x81, 0x75, 0x1b, 0x20, 0xad, 0xcb,
-	0x58, 0x5b, 0x97, 0x41, 0xf4, 0xa8, 0x64, 0xcc, 0xe4, 0xa0, 0xf5, 0xed, 0x71, 0xaa, 0x46, 0x4a,
-	0x85, 0xd3, 0x5f, 0x7a, 0xc4, 0x38, 0x8d, 0x8f, 0x9b, 0xa2, 0x35, 0x5e, 0x85, 0xcb, 0x32, 0x09,
-	0x2d, 0x30, 0x0f, 0xcb, 0x86, 0x00, 0xab, 0xd3, 0x28, 0x45, 0x35, 0x18, 0x32, 0x91, 0x97, 0x49,
-	0x1c, 0x6c, 0xc3, 0xf3, 0x14, 0x6d, 0x01, 0x79, 0xb0, 0xf7, 0x61, 0x47, 0x17, 0xf7, 0x6b, 0x81,
-	0x20, 0xbc, 0x62, 0x78, 0xb5, 0x5c, 0x7c, 0x0e, 0xbb, 0xad, 0x93, 0xaa, 0x8c, 0x7b, 0x8d, 0x8c,
-	0x1f, 0xc0, 0xee, 0xa2, 0xe9, 0x64, 0xe8, 0xdf, 0x56, 0xaa, 0xb1, 0x44, 0xc3, 0x7c, 0x21, 0x12,
-	0x73, 0xb5, 0x4a, 0xf6, 0x47, 0x30, 0xd0, 0xe1, 0xfd, 0x6f, 0x61, 0xfc, 0xb2, 0x4e, 0xa0, 0x33,
-	0x1c, 0x1e, 0x14, 0xf0, 0x30, 0x7a, 0x91, 0x26, 0x1b, 0x8a, 0x34, 0x0a, 0x46, 0xb9, 0x91, 0xd9,
-	0x3d, 0x70, 0x69, 0xe3, 0x69, 0x88, 0x53, 0x48, 0x47, 0x71, 0x57, 0xa5, 0xc2, 0xff, 0xd5, 0x86,
-	0xa1, 0x99, 0xe6, 0x37, 0x6a, 0x45, 0x0b, 0x2b, 0xf6, 0x16, 0x56, 0x70, 0x7e, 0x44, 0x71, 0x91,
-	0x25, 0xe1, 0xa6, 0x35, 0x3f, 0x8c, 0x8e, 0xe6, 0x47, 0x63, 0x1a, 0xf4, 0xaf, 0x9f, 0x06, 0x35,
-	0xc8, 0x06, 0x2d, 0x90, 0x3d, 0xae, 0xd8, 0x35, 0xa4, 0x66, 0x4d, 0xda, 0x6f, 0x52, 0x27, 0xc3,
-	0x9e, 0xc0, 0xa8, 0xc0, 0x21, 0xb6, 0x90, 0x22, 0xc7, 0x29, 0xa1, 0x76, 0xdd, 0xdb, 0xda, 0x75,
-	0x66, 0xcc, 0x7a, 0x5f, 0xe5, 0xcd, 0xde, 0x31, 0x50, 0xd2, 0x6f, 0x0c, 0x6b, 0xef, 0xaa, 0x81,
-	0xf4, 0x06, 0xd4, 0x9c, 0x7c, 0x0a, 0xbb, 0xad, 0xe8, 0xb7, 0xe2, 0xf5, 0xcf, 0x3d, 0x18, 0x9b,
-	0x6c, 0xfe, 0x13, 0xb7, 0x17, 0x22, 0x2a, 0x1f, 0x01, 0x5a, 0x57, 0x7c, 0x77, 0x3a, 0xf9, 0xde,
-	0x6f, 0xb5, 0xe2, 0xb8, 0xe6, 0xfb, 0xa0, 0xfb, 0xfb, 0xa0, 0xe4, 0xfc, 0x65, 0x9d, 0xe6, 0x95,
-	0x9c, 0x69, 0xb2, 0xc1, 0x6a, 0xb3, 0x41, 0xf9, 0x53, 0x1b, 0x4c, 0xa6, 0xc4, 0xdd, 0x43, 0x00,
-	0x19, 0xe6, 0x4b, 0x2e, 0x89, 0x60, 0x0e, 0x59, 0x1a, 0x1a, 0x75, 0x5e, 0x8a, 0x37, 0x3a, 0xd5,
-	0x93, 0x40, 0x59, 0x2b, 0xd9, 0x8f, 0xc0, 0xfd, 0x12, 0xdd, 0xc2, 0x3c, 0x5c, 0x15, 0x5d, 0xb8,
-	0xa7, 0x12, 0x58, 0x9d, 0x25, 0xb0, 0xaf, 0x7e, 0x08, 0x9c, 0x76, 0x7d, 0xfd, 0x25, 0xec, 0x7c,
-	0x81, 0x9d, 0x95, 0xfc, 0xff, 0x0e, 0x74, 0x69, 0x01, 0xa8, 0xf6, 0x5f, 0x11, 0xa7, 0x3e, 0xd3,
-	0x6a, 0x9d, 0xf9, 0x61, 0x45, 0x25, 0x9b, 0xda, 0x77, 0xdf, 0xb4, 0xaf, 0x3e, 0xaa, 0x93, 0x4d,
-	0xf5, 0xc7, 0x8e, 0x73, 0xc5, 0xc7, 0x4e, 0xbf, 0xf5, 0xb1, 0x83, 0x83, 0x5a, 0xe4, 0x11, 0xcf,
-	0xe7, 0x1b, 0x43, 0xe5, 0x52, 0x6c, 0x5f, 0x6a, 0xd8, 0xbe, 0xd4, 0x9b, 0xbc, 0x76, 0x11, 0x0c,
-	0x02, 0x7d, 0xc5, 0x9b, 0xcc, 0x34, 0x3c, 0x79, 0x9d, 0x97, 0x13, 0x58, 0x2d, 0x95, 0xd7, 0x1a,
-	0x3f, 0x6d, 0x4b, 0x12, 0xa8, 0x75, 0x19, 0xbf, 0x5f, 0xc5, 0xf7, 0x3f, 0x83, 0xa1, 0x99, 0x5a,
-	0x9d, 0x78, 0xde, 0x9e, 0x86, 0xd6, 0xbf, 0xa6, 0xa1, 0xff, 0x3d, 0xf4, 0x9f, 0x5d, 0xe0, 0x6d,
-	0xbb, 0xd2, 0x24, 0x66, 0x5a, 0x1d, 0xcc, 0xbc, 0xc9, 0x4b, 0xec, 0x35, 0x5f, 0x62, 0x2a, 0xb9,
-	0x11, 0x3f, 0x3f, 0x78, 0xfd, 0xc7, 0xe1, 0x9d, 0xd7, 0x7f, 0x1e, 0xf6, 0x7e, 0xc3, 0xdf, 0xef,
-	0xf8, 0xfb, 0xf1, 0xaf, 0xc3, 0x3b, 0xf3, 0x01, 0x31, 0xed, 0x83, 0x7f, 0x02, 0x00, 0x00, 0xff,
-	0xff, 0x5e, 0x75, 0xfa, 0x7e, 0x97, 0x0c, 0x00, 0x00,
-}

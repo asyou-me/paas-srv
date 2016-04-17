@@ -6,6 +6,7 @@ import (
 	base_utils "github.com/asyoume/lib/utils"
 	"github.com/asyoume/paas_srv/pkg/handler"
 	"github.com/asyoume/paas_srv/pkg/re_act"
+	"github.com/asyoume/paas_srv/pkg/re_act/types"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/engine/fasthttp"
 	mw "github.com/labstack/echo/middleware"
@@ -32,8 +33,17 @@ func main() {
 		os.Exit(2)
 	}
 
+	// 初始化系统日志
+	re_act.InitLog(conf.MicroSer["log1"])
+
+	// 记录系统日志
+	log := types.NewSystemLog()
+	log.Type = "system"
+	log.Msg = "start "
+	re_act.Info(log)
+
 	// 初始化控制层
-	err = handler.Init(conf)
+	err = handler.Init()
 	if err != nil {
 		fmt.Println("handler初始化失败:", err)
 	}
@@ -61,14 +71,14 @@ func main() {
 	//e.Delete("/ser", podDelete)
 
 	// 应用
-	e.Get("/app", podGet)
-	e.Post("/app", podPost)
+	e.Get("/app", appGet)
+	e.Post("/app", appPost)
 	e.Put("/app", podPut)
 	e.Patch("/app", podPatch)
 	e.Delete("/app", podDelete)
 
 	// 应用模板
-	e.Get("/app/temp", podGet)
+	e.Get("/app/temp", appTempGet)
 	//e.Post("/app/temp", podPost)
 	//e.Put("/app/temp", podPut)
 	//e.Patch("/app/temp", podPatch)

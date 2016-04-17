@@ -33,7 +33,7 @@ func (this *PodHandler) List(args *types.ListParams, reply *types.PodList) error
 
 	podList, err := pods.List(options)
 	if err != nil {
-		reply.Code = 500
+		//reply.Code = 500
 		reply.Region = args.Region
 		return err
 	}

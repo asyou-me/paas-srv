@@ -79,5 +79,16 @@ func main() {
 		fmt.Println("Pod.Delete: PASS")
 	}
 
+	args3 := new(types.GetParams)
+	args3.Id = "222"
+	reply3 := new(types.App)
+	err = cli.Call("AppTemp.Get", args3, reply3)
+	if err != nil {
+		fmt.Println("AppTemp.Get: error %q", err.Error())
+	} else {
+		fmt.Println("AppTemp.Get: PASS")
+		fmt.Println(reply3)
+	}
+
 	time.Sleep(5 * time.Second)
 }

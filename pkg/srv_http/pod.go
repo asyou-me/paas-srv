@@ -9,20 +9,21 @@ import (
 	"net/http"
 )
 
-var pod_h *handler.PodHandler = new(handler.PodHandler)
+var podHandler *handler.PodHandler = new(handler.PodHandler)
 
 func podGet(c echo.Context) error {
 
+	var arg = new(types.GetParams)
+	arg.Region = c.QueryParam("region")
+	arg.ParentId = c.QueryParam("appid")
+	arg.Id = c.QueryParam("id")
 	var pod = new(types.Pod)
-	pod.Region = c.QueryParam("region")
-	pod.ParentId = c.QueryParam("appid")
-	pod.Id = c.QueryParam("id")
 
-	err := pod_h.Get(pod, pod)
+	err := podHandler.Get(arg, pod)
 	if err != nil {
-		return protoRetrun(c, http.StatusNotFound, pod)
+		return SendProto(c, http.StatusNotFound, pod)
 	}
-	return protoRetrun(c, http.StatusOK, pod)
+	return SendProto(c, http.StatusOK, pod)
 }
 
 /*protoBuffer, err := utils.RecvFrame(c.Request().Body())
