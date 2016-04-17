@@ -125,6 +125,9 @@ func (this *AppHandler) Patch(args *types.Pod, reply *types.Event) error {
 	return nil
 }
 
+
+*/
+
 //
 func (this *AppHandler) Delete(args *types.DeleteParams, reply *types.Event) error {
 	c := NewkubeClient()
@@ -135,7 +138,6 @@ func (this *AppHandler) Delete(args *types.DeleteParams, reply *types.Event) err
 	}
 	return nil
 }
-*/
 
 func AppAttributeCode(app *types.App) {
 

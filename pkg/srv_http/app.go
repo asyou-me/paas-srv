@@ -68,9 +68,25 @@ func appPost(c echo.Context) error {
 }
 
 func appPut(c echo.Context) error {
-	data := []byte{}
-	fmt.Println(data)
-	return c.JSONBlob(http.StatusOK, data)
+	app := new(types.App)
+	reply := new(types.Event)
+	err := RecvProto(c, app)
+
+	if err != nil {
+		reply.Code = http.StatusBadRequest
+		reply.Content = "数据格式为非protobuf"
+		return SendProto(c, http.StatusBadRequest, reply)
+	}
+
+	err = appHandler.Post(app, reply)
+
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println(reply)
+		return SendProto(c, http.StatusInternalServerError, reply)
+	}
+
+	return SendProto(c, http.StatusOK, reply)
 }
 
 func appPatch(c echo.Context) error {
@@ -80,7 +96,8 @@ func appPatch(c echo.Context) error {
 }
 
 func appDelete(c echo.Context) error {
-	data := []byte{}
+	arg := new(types.DeleteParams)
+	reply := new(types.Event)
 	fmt.Println(data)
 	return c.JSONBlob(http.StatusOK, data)
 }
