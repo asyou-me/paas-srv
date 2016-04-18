@@ -12,6 +12,6 @@ func version(c echo.Context) error {
 }
 
 // 获取 api 版本信息
-func versionInfo(c echo.Context) error {
-	return c.String(http.StatusOK, types.ApiVersionInfo)
+func info(c echo.Context) error {
+	return c.String(http.StatusOK, types.Info)
 }

@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/asyoume/paas_srv/pkg/handler"
 	"github.com/asyoume/paas_srv/pkg/types"
-	//"github.com/asyoume/paas_srv/pkg/re_act"
 	"github.com/labstack/echo"
 	"net/http"
 )
@@ -16,6 +15,7 @@ func appTempGet(c echo.Context) error {
 	app := new(types.App)
 
 	args.Region = c.QueryParam("region")
+
 	if args.Region == "" {
 		args.Region = types.DefaultRegion
 	}
@@ -26,5 +26,5 @@ func appTempGet(c echo.Context) error {
 	if err != nil {
 		return c.String(http.StatusNotFound, "")
 	}
-	return SendProto(c, http.StatusOK, app)
+	return SendData(c, http.StatusOK, app)
 }

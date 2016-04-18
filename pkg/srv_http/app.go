@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/asyoume/paas_srv/pkg/handler"
 	"github.com/asyoume/paas_srv/pkg/types"
-	//"github.com/asyoume/paas_srv/pkg/re_act"
 	"github.com/golang/protobuf/proto"
 	"github.com/labstack/echo"
 	"net/http"
@@ -40,42 +39,42 @@ func appGet(c echo.Context) error {
 
 	// 获取数据失败
 	if err != nil {
-		return SendProto(c, http.StatusNotFound, returnValue)
+		return SendData(c, http.StatusNotFound, returnValue)
 	}
-	return SendProto(c, http.StatusOK, returnValue)
+	return SendData(c, http.StatusOK, returnValue)
 }
 
 func appPost(c echo.Context) error {
 	app := new(types.App)
 	reply := new(types.Event)
-	err := RecvProto(c, app)
+	err := RecvData(c, app)
 
 	if err != nil {
 		reply.Code = http.StatusBadRequest
-		reply.Content = "数据格式为非protobuf"
-		return SendProto(c, http.StatusBadRequest, reply)
+		reply.Content = "数据序列化错误"
+		return SendData(c, http.StatusBadRequest, reply)
 	}
 
 	err = appHandler.Post(app, reply)
 
 	if err != nil {
-		fmt.Println(err)
-		fmt.Println(reply)
-		return SendProto(c, http.StatusInternalServerError, reply)
+		reply.Code = http.StatusInternalServerError
+		reply.Content = err.Error()
+		return SendData(c, http.StatusInternalServerError, reply)
 	}
 
-	return SendProto(c, http.StatusOK, reply)
+	return SendData(c, http.StatusOK, reply)
 }
 
 func appPut(c echo.Context) error {
 	app := new(types.App)
 	reply := new(types.Event)
-	err := RecvProto(c, app)
+	err := RecvData(c, app)
 
 	if err != nil {
 		reply.Code = http.StatusBadRequest
 		reply.Content = "数据格式为非protobuf"
-		return SendProto(c, http.StatusBadRequest, reply)
+		return SendData(c, http.StatusBadRequest, reply)
 	}
 
 	err = appHandler.Post(app, reply)
@@ -83,10 +82,10 @@ func appPut(c echo.Context) error {
 	if err != nil {
 		fmt.Println(err)
 		fmt.Println(reply)
-		return SendProto(c, http.StatusInternalServerError, reply)
+		return SendData(c, http.StatusInternalServerError, reply)
 	}
 
-	return SendProto(c, http.StatusOK, reply)
+	return SendData(c, http.StatusOK, reply)
 }
 
 func appPatch(c echo.Context) error {
@@ -96,8 +95,10 @@ func appPatch(c echo.Context) error {
 }
 
 func appDelete(c echo.Context) error {
-	arg := new(types.DeleteParams)
-	reply := new(types.Event)
+	//arg := new(types.DeleteParams)
+	//reply := new(types.Event)
+
+	data := []byte{}
 	fmt.Println(data)
 	return c.JSONBlob(http.StatusOK, data)
 }

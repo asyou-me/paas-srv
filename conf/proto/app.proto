@@ -9,8 +9,8 @@ option (gogoproto.marshaler_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 option (gogoproto.goproto_getters_all) = false;
 
-// 应用
-message App {
+// 应用模板
+message AppTemp {
     string id =1;
     string name =2;
     // 区域
@@ -18,12 +18,22 @@ message App {
     repeated  Pod pods = 4 ;
     repeated  Service services = 5 ;
     repeated Volume volumes = 6;
-    Runtime runtime = 7;
-    string timelyState =8;
     map<string,string> conf =9;
     repeated string editable =10;
-    map<string,string> labels =11;
 }
+
+//
+message App {
+    string id =1;
+    string name =2;
+    // 区域
+    string region =3;
+    string tmpId =4;
+    string timelyState =8;
+    map<string,string> conf =9;
+}
+
+// 
 
 message AppList{
     int64 offset =1;

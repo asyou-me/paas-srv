@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/asyoume/paas_srv/pkg/handler"
 	"github.com/asyoume/paas_srv/pkg/types"
-	//"github.com/asyoume/paas_srv/pkg/re_act"
 	"github.com/labstack/echo"
 	"net/http"
 )
@@ -21,20 +20,10 @@ func podGet(c echo.Context) error {
 
 	err := podHandler.Get(arg, pod)
 	if err != nil {
-		return SendProto(c, http.StatusNotFound, pod)
+		return SendData(c, http.StatusNotFound, pod)
 	}
-	return SendProto(c, http.StatusOK, pod)
+	return SendData(c, http.StatusOK, pod)
 }
-
-/*protoBuffer, err := utils.RecvFrame(c.Request().Body())
-if err != nil {
-	return err
-}
-
-err = proto.Unmarshal(protoBuffer, pod)
-if err != nil {
-	return err
-}*/
 
 func podPost(c echo.Context) error {
 	data := []byte{}

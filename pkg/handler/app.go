@@ -124,8 +124,6 @@ func (this *AppHandler) Patch(args *types.Pod, reply *types.Event) error {
 	}
 	return nil
 }
-
-
 */
 
 //

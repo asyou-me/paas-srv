@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/asyoume/paas_srv/pkg/types"
 )
 
@@ -51,8 +50,6 @@ func (this *AppTempHandler) Get(args *types.GetParams, reply *types.App) error {
 		Conf:     map[string]string{},
 		Editable: []string{""},
 	}
-
-	fmt.Println(reply)
 
 	return nil
 }

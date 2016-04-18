@@ -46,7 +46,11 @@ func main() {
 	err = handler.Init()
 	if err != nil {
 		fmt.Println("handler初始化失败:", err)
+		os.Exit(2)
 	}
+
+	// 选择数据序列化方式
+	selectProto("proto")
 
 	// echo引擎
 	e := echo.New()
@@ -93,7 +97,7 @@ func main() {
 
 	// 版本信息
 	e.Get("/version", version)
-	e.Get("/version/info", versionInfo)
+	e.Get("/version/info", info)
 
 	// 运行http服务器
 	e.Run(fasthttp.New(":1234"))
