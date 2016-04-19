@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/asyoume/paas_srv/pkg/utils"
 	"github.com/golang/protobuf/proto"
 	"github.com/labstack/echo"
+
+	"github.com/asyoume/paas_srv/pkg/utils"
 )
 
 func RecvProto(c echo.Context, data proto.Message) error {

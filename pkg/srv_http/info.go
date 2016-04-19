@@ -1,9 +1,11 @@
 package main
 
 import (
-	"github.com/asyoume/paas_srv/pkg/types"
-	"github.com/labstack/echo"
 	"net/http"
+
+	"github.com/labstack/echo"
+
+	"github.com/asyoume/paas_srv/pkg/types"
 )
 
 // 获取 api 版本
@@ -12,6 +14,11 @@ func version(c echo.Context) error {
 }
 
 // 获取 api 版本信息
-func versionInfo(c echo.Context) error {
+func info(c echo.Context) error {
+	return c.String(http.StatusOK, types.ApiVersionInfo)
+}
+
+// 获取 api 版本信息
+func apiMap(c echo.Context) error {
 	return c.String(http.StatusOK, types.ApiVersionInfo)
 }

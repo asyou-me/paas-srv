@@ -3,14 +3,16 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/engine/fasthttp"
+	mw "github.com/labstack/echo/middleware"
+
 	base_utils "github.com/asyoume/lib/utils"
 	"github.com/asyoume/paas_srv/pkg/handler"
 	"github.com/asyoume/paas_srv/pkg/re_act"
 	"github.com/asyoume/paas_srv/pkg/re_act/types"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/engine/fasthttp"
-	mw "github.com/labstack/echo/middleware"
-	"os"
 )
 
 func Usage() {
@@ -91,9 +93,10 @@ func main() {
 	e.Patch("/user", podPatch)
 	e.Delete("/user", podDelete)
 
-	// 版本信息
+	// 服务信息
 	e.Get("/version", version)
-	e.Get("/version/info", versionInfo)
+	e.Get("/info", info)
+	e.Get("/api/map", info)
 
 	// 运行http服务器
 	e.Run(fasthttp.New(":1234"))

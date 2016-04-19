@@ -2,8 +2,9 @@ package handler
 
 import (
 	"fmt"
-	"github.com/asyoume/paas_srv/pkg/types"
 	"testing"
+
+	"github.com/asyoume/paas_srv/pkg/types"
 )
 
 func TestAppGet(t *testing.T) {

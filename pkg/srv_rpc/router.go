@@ -57,20 +57,26 @@ func main() {
 	}
 
 	// 注册 pod 服务
-	pod_h := new(handler.PodHandler)
-	err = rpc.RegisterName("Pod", pod_h)
+	podHandler := new(handler.PodHandler)
+	err = rpc.RegisterName("Pod", podHandler)
 	if err != nil {
 		fmt.Println(err)
 	}
 	// 注册网络服务
-	ser_h := new(handler.SerHandler)
-	err = rpc.RegisterName("Ser", ser_h)
+	serHandler := new(handler.SerHandler)
+	err = rpc.RegisterName("Ser", serHandler)
 	if err != nil {
 		fmt.Println(err)
 	}
-	// 注册AppTemp
-	apptemp_h := new(handler.AppTempHandler)
-	err = rpc.RegisterName("AppTemp", apptemp_h)
+	// 注册 App 服务
+	appHandler := new(handler.AppHandler)
+	err = rpc.RegisterName("App", appHandler)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// 注册 AppTemp 服务
+	apptempHandler := new(handler.AppTempHandler)
+	err = rpc.RegisterName("AppTemp", apptempHandler)
 	if err != nil {
 		fmt.Println(err)
 	}
