@@ -2,9 +2,10 @@ package re_act
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/asyoume/lib/log_client"
 	"github.com/asyoume/lib/pulic_type"
-	"os"
 )
 
 var Log *log_client.Logger

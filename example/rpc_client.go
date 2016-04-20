@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/asyoume/paas_srv/pkg/types"
 	"github.com/asyoume/protorpc"
-	"time"
 )
 
 func main() {

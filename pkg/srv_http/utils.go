@@ -2,10 +2,12 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/asyoume/paas_srv/pkg/utils"
+	"io/ioutil"
+
 	"github.com/golang/protobuf/proto"
 	"github.com/labstack/echo"
-	"io/ioutil"
+
+	"github.com/asyoume/paas_srv/pkg/utils"
 )
 
 func selectProto(ty string) {
@@ -57,6 +59,6 @@ func SendJson(c echo.Context, code int, data proto.Message) error {
 	}
 	resp.Write(buffer)
 	resp.WriteHeader(code)
-	c.response.Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSONCharsetUTF8)
+	resp.Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSONCharsetUTF8)
 	return nil
 }

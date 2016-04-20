@@ -2,8 +2,9 @@ package handler
 
 import (
 	"fmt"
-	"github.com/asyoume/paas_srv/pkg/types"
 	"testing"
+
+	"github.com/asyoume/paas_srv/pkg/types"
 )
 
 func TestAppGet(t *testing.T) {
@@ -12,9 +13,14 @@ func TestAppGet(t *testing.T) {
 	arg.Id = "redis"
 	arg.Region = ""
 	app := new(types.App)
+
 	appHandler := AppHandler{}
+
 	err := appHandler.Get(arg, app)
-	fmt.Println("AppHandler get err:", err)
+
+	if err != nil {
+		t.Error("AppHandler get err:", err)
+	}
 }
 
 func TestAppList(t *testing.T) {
@@ -25,7 +31,12 @@ func TestAppList(t *testing.T) {
 	arg.Length = 10
 	arg.Offset = 0
 	list := new(types.AppList)
+
 	appHandler := AppHandler{}
+
 	err := appHandler.List(arg, list)
-	fmt.Println("AppHandler list err:", err)
+
+	if err != nil {
+		t.Error("AppHandler list err:", err)
+	}
 }

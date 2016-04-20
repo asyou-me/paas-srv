@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/asyoume/paas_srv/pkg/handler"
-	"github.com/asyoume/paas_srv/pkg/types"
+	"net/http"
+
 	"github.com/golang/protobuf/proto"
 	"github.com/labstack/echo"
-	"net/http"
+
+	"github.com/asyoume/paas_srv/pkg/handler"
+	"github.com/asyoume/paas_srv/pkg/types"
 )
 
 var appHandler *handler.AppHandler = new(handler.AppHandler)
@@ -16,31 +18,30 @@ func appGet(c echo.Context) error {
 	ty := c.QueryParam("type")
 	var returnValue proto.Message
 	var err error
+	var Region = c.QueryParam("region")
 
 	if ty == "value" { // 获取单个应用信息
 		args := new(types.GetParams)
 		app := new(types.App)
 		returnValue = app
-		args.Region = c.QueryParam("region")
+		args.Region = Region
 		args.Id = c.QueryParam("id")
 		err = appHandler.Get(args, app)
-	} else if ty == "list" { // 获取应用列表
+	} else { // 获取应用列表
 		args := new(types.ListParams)
 		applist := new(types.AppList)
 		returnValue = applist
-		args.Region = c.QueryParam("region")
-		args.Id = c.QueryParam("id")
+		args.Region = Region
 		args.Offset = 0  // 列表偏移量
 		args.Length = 10 // 列表长度
 		err = appHandler.List(args, applist)
-	} else { // 没有类型返回错误
-		return c.String(http.StatusNotFound, "")
 	}
 
 	// 获取数据失败
 	if err != nil {
 		return SendData(c, http.StatusNotFound, returnValue)
 	}
+
 	return SendData(c, http.StatusOK, returnValue)
 }
 
