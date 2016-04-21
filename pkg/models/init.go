@@ -4,17 +4,12 @@ import (
 	"github.com/jackc/pgx"
 )
 
-var connConfig = pgx.ConnConfig{
-	Host:     "127.0.0.1",
-	User:     "pgx_md5",
-	Password: "secret",
-	Database: "pgx_test",
-}
+var (
+	Pool *pgx.ConnPool
+)
 
-func init() {
-	conn, err := pgx.NewConnPool(*connConfig)
-	if err != nil {
-		fmt.Printf("Unable to establish connection: %v", err)
-		return
-	}
+func Init(connConfig *pgx.ConnPoolConfig) error {
+	var err error
+	Pool, err = pgx.NewConnPool(*connConfig)
+	return err
 }
