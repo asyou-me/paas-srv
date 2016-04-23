@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package types;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.goproto_getters_all) = false;
+
+message User{
+  string id =1;
+  string name =2;
+
+  Group group =2;
+  Resource resource =2;
+  int64 time =2;
+
+}
+
+message Group{
+  string id =1;
+
+  Resource resource =2;
+  int64 time =2;
+}
+
+message Resource{
+  string id =1;
+  Resource resource =2;
+  int64 time =2;
+}

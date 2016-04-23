@@ -9,7 +9,7 @@ type AppTempHandler struct {
 
 // 获取应用模板
 func (this *AppTempHandler) Get(args *types.GetParams, reply *types.App) error {
-	*reply = types.App{
+	*reply = types.AppTemp{
 		Region: "shanghai",
 		Pods: [](*types.Pod){
 			&types.Pod{

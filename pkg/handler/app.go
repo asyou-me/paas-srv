@@ -57,10 +57,10 @@ func (this *AppHandler) List(args *types.ListParams, reply *types.AppList) error
 
 // 创建服务器
 func (this *AppHandler) Post(args *types.App, reply *types.Event) error {
-	c := NewkubeClient()
+	//c := NewkubeClient()
 	args.Id = "default"
 
-	if len(args.Pods) == 0 {
+	/*if len(args.Pods) == 0 {
 		reply.Code = 500
 		reply.Content = "Pods lenght 0"
 		return errors.New("Pods lenght 0")
@@ -84,7 +84,7 @@ func (this *AppHandler) Post(args *types.App, reply *types.Event) error {
 		if err != nil {
 			return err
 		}
-	}
+	}*/
 
 	reply.Code = 200
 	reply.Content = "ok"

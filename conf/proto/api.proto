@@ -11,10 +11,6 @@ option (gogoproto.goproto_getters_all) = false;
 
 // 应用模板
 message AppTemp {
-    string id =1;
-    string name =2;
-    // 区域
-    string region =3;
     repeated  Pod pods = 4 ;
     repeated  Service services = 5 ;
     repeated Volume volumes = 6;
@@ -22,7 +18,7 @@ message AppTemp {
     repeated string editable =10;
 }
 
-//
+// 应用
 message App {
     string id =1;
     string name =2;
@@ -33,8 +29,7 @@ message App {
     map<string,string> conf =9;
 }
 
-// 
-
+// 应用列表
 message AppList{
     int64 offset =1;
     int64 length =2;

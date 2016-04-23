@@ -11,7 +11,13 @@ DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd  )"
 
 protoc_path="$DIR/../../../../"
 
-protoc3 "$DIR/../conf/proto/app.proto" \
+protoc3 "$DIR/../conf/proto/api.proto" \
+--gofast_out="$DIR/../pkg/types" \
+--js_out=import_style=commonjs,binary:"$DIR/../_out/js"  \
+--proto_path=${protoc_path} \
+--proto_path="$DIR/../conf/proto"
+
+protoc3 "$DIR/../conf/proto/rbac.proto" \
 --gofast_out="$DIR/../pkg/types" \
 --js_out=import_style=commonjs,binary:"$DIR/../_out/js"  \
 --proto_path=${protoc_path} \
