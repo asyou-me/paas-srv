@@ -28,9 +28,11 @@ COMMIT
 -A FORWARD -o docker0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -i docker0 ! -o docker0 -j ACCEPT
 -A FORWARD -i docker0 -o docker0 -j ACCEPT
+
 -A DOCKER -d 172.17.93.2/32 ! -i docker0 -o docker0 -p udp -m udp --dport 27015 -j ACCEPT
 
 -A DOCKER -d 172.17.93.3/32 ! -i docker0 -o docker0 -p udp -m udp --dport 27016 -j ACCEPT
+
 COMMIT
 # Completed on Sat Apr 23 13:30:40 2016
 

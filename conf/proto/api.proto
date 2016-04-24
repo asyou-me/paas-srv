@@ -11,22 +11,26 @@ option (gogoproto.goproto_getters_all) = false;
 
 // 应用模板
 message AppTemp {
-    repeated  Pod pods = 4 ;
-    repeated  Service services = 5 ;
+    string id =1;
+    string name =2;
+    string icon =3;
+    repeated Pod pods = 4 ;
+    repeated Service services = 5 ;
     repeated Volume volumes = 6;
-    map<string,string> conf =9;
-    repeated string editable =10;
+    map<string,string> conf =7;
+    repeated string editable =8;
 }
 
 // 应用
 message App {
     string id =1;
     string name =2;
+    string icon =3;
     // 区域
-    string region =3;
-    string tmpId =4;
-    string timelyState =8;
-    map<string,string> conf =9;
+    string region =4;
+    string tmpId =5;
+    string timelyState =6;
+    map<string,string> conf =7;
 }
 
 // 应用列表
@@ -44,22 +48,23 @@ message AppList{
 message Pod {
     string id = 1;
     string name = 2;
-    int32 state = 3;
-    string release_name = 4;
-    // 镜像信息
-    repeated  Container containers = 5;
-    // 运行状态
-    Runtime runtime = 6;
-    bool enable_auto_redeploy = 7;
-    int64 created_at = 8;
-    int64 last_operated_at = 9;
-    string config = 10;
-    // 区域
-    string region = 11;
+    // 应用区域
+    string region = 3;
     // 应用id
-    string parent_id = 12;
-    map<string,string> labels  = 13;
-    repeated Volume volumes = 14;
+    string parentId = 4;
+
+    // 镜像信息
+    string nodeName = 5;
+    map<string,string> labels  = 6;
+    repeated  Container containers = 7;
+    repeated Volume volumes = 8;
+    // 配置文件模板
+    string configTemp = 9;
+
+    bool autoRedeploy = 10;
+    int64 time = 11;
+    int64 editTime = 12;
+    Runtime runtime = 13;
 }
 
 // pod 列表
@@ -79,7 +84,13 @@ message Container{
     string image = 3;
     string version = 4;
     repeated  ContainerPort port =5;
-    repeated Volume volumeMounts = 6;
+    repeated Volume volumeMounts =6;
+    Resource resource =7;
+}
+
+message Resource{
+    map<string,string> limits  = 1;
+    map<string,string> requests = 2;
 }
 
 // 镜像端口信息

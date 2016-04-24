@@ -13,22 +13,27 @@ message User{
   string id =1;
   string name =2;
 
-  repeated Resource resourceCache =2;
-  repeated Group group =2;
-  repeated Resource resource =2;
+  repeated Resource resourceCache =3;
+  repeated Group group =4;
+  repeated Resource resource =5;
 
-  int64 time =2;
+  int64 time =6;
 }
 
 message Group{
   string id =1;
+  string name =2;
 
-  repeated Resource resource =2;
-  int64 time =2;
+  repeated Resource resource =3;
+
+  int64 time =4;
 }
 
 message Resource{
   string id =1;
-  Resource resource =2;
-  int64 time =2;
+  string name =2;
+
+  Resource resource =3;
+
+  int64 time =4;
 }
